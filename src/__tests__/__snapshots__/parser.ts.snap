@@ -1,0 +1,145 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`parser array of numbers default value: validate array of numbers 1`] = `
+Object {
+  "diagnostics": Array [
+    "Invalid configuration option '--config': Option type 'b' is invalid, expected 'R'",
+    "Invalid configuration option \`--test\`: Default value is type 'String', expected 'Array'",
+  ],
+}
+`;
+
+exports[`parser array of strings default value: validate array of strings 1`] = `
+Object {
+  "diagnostics": Array [
+    "Invalid configuration option '--config': Option type 'b' is invalid, expected 'R'",
+    "Invalid configuration option \`--test\`: Default value is type 'Number', expected 'Array'",
+  ],
+}
+`;
+
+exports[`parser bad config flag type: bad config flag type 1`] = `
+Object {
+  "diagnostics": Array [
+    "Invalid configuration option '--config': Option type 'b' is invalid, expected 'R'",
+  ],
+}
+`;
+
+exports[`parser bad option flag type: bad option flag type 1`] = `
+Object {
+  "diagnostics": Array [
+    "Invalid configuration option '--bad': Option type 'z' is invalid",
+  ],
+}
+`;
+
+exports[`parser config is required: config required 1`] = `
+Object {
+  "diagnostics": Array [
+    "Invalid configuration option '--config': '--config' is always required in user defined definitions",
+  ],
+}
+`;
+
+exports[`parser duplicate aliases: duplicate alias 1`] = `
+Object {
+  "diagnostics": Array [
+    "Invalid configuration option '--duplicate': Option '--config' already has alias '-c'",
+  ],
+}
+`;
+
+exports[`parser executable type flag: validate executable flag 1`] = `
+Object {
+  "diagnostics": Array [
+    "Invalid configuration option '--config': Option type 'b' is invalid, expected 'R'",
+    "Invalid configuration option \`--test\`: Default value is type 'Number', expected 'Function'",
+  ],
+}
+`;
+
+exports[`parser number type flag: validate number flag 1`] = `
+Object {
+  "diagnostics": Array [
+    "Invalid configuration option '--config': Option type 'b' is invalid, expected 'R'",
+    "Invalid configuration option \`--test\`: Default value is type 'String', expected 'Number'",
+  ],
+}
+`;
+
+exports[`parser number type flag: validate string flag 1`] = `
+Object {
+  "diagnostics": Array [
+    "Invalid configuration option '--config': Option type 'b' is invalid, expected 'R'",
+    "Invalid configuration option \`--test\`: Default value is type 'Number', expected 'String'",
+  ],
+}
+`;
+
+exports[`parser options must match names: option names must match 1`] = `
+Object {
+  "diagnostics": Array [
+    "Invalid configuration option '--test': Option key 'test' does not match name 'not-test'",
+  ],
+}
+`;
+
+exports[`parser simple arguments: simple argument 1`] = `
+ConfigurationState {
+  "args": Array [
+    "arg1",
+  ],
+  "argv": null,
+  "config": Object {
+    "config": Object {
+      "alias": "c",
+      "defaultValue": Object {},
+      "description": "Provide a configuration",
+      "name": "config",
+      "optional": true,
+      "type": "R",
+    },
+  },
+  "configTree": null,
+  "diagnostics": Array [],
+  "optionsByAlias": Map {
+    "c" => Object {
+      "alias": "c",
+      "defaultValue": Object {},
+      "description": "Provide a configuration",
+      "name": "config",
+      "optional": true,
+      "type": "R",
+    },
+  },
+  "optionsByName": Map {
+    "config" => Object {
+      "alias": "c",
+      "defaultValue": Object {},
+      "description": "Provide a configuration",
+      "name": "config",
+      "optional": true,
+      "type": "R",
+    },
+  },
+  "rest": Array [],
+  "values": Map {
+    Object {
+      "alias": "c",
+      "defaultValue": Object {},
+      "description": "Provide a configuration",
+      "name": "config",
+      "optional": true,
+      "type": "R",
+    } => Object {
+      "providedBy": 0,
+      "value": Object {
+        "basedir": "",
+        "filename": "",
+        "getModule": [Function],
+      },
+    },
+  },
+}
+`;
