@@ -233,4 +233,24 @@ describe("parser", () => {
     const result = parse([], config, globalEnv);
     expect(filter(result, ["diagnostics"])).toMatchSnapshot("array of numbers wrong type");
   });
+
+  test("array of string default value when default value is an array, but also incorrect", () => {
+    const config: Configuration = {
+      config: {
+        name: "config",
+        type: "R",
+        defaultValue: {},
+        alias: "c",
+      },
+      test: {
+        name: "test",
+        type: "S",
+        defaultValue: [1, 2, 3],
+      },
+    };
+    const result = parse([], config, globalEnv);
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot("array of strings wrong type");
+  });
+
+
 });

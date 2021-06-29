@@ -19,6 +19,16 @@ Object {
 }
 `;
 
+exports[`parser array of string default value when default value is an array, but also incorrect: array of strings wrong type 1`] = `
+Object {
+  "diagnostics": Array [
+    "Invalid configuration option \`--test\`: Default value is type 'Number', expected 'String'",
+    "Invalid configuration option \`--test\`: Default value is type 'Number', expected 'String'",
+    "Invalid configuration option \`--test\`: Default value is type 'Number', expected 'String'",
+  ],
+}
+`;
+
 exports[`parser array of strings default value: validate array of strings 1`] = `
 Object {
   "diagnostics": Array [
