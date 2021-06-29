@@ -79,6 +79,14 @@ Object {
 }
 `;
 
+exports[`parser invalid boolean value: invalid boolean default value 1`] = `
+Object {
+  "diagnostics": Array [
+    "Invalid configuration option \`--test\`: Default value is type 'String', expected 'Boolean'",
+  ],
+}
+`;
+
 exports[`parser number type flag: validate number flag 1`] = `
 Object {
   "diagnostics": Array [

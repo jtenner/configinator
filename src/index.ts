@@ -204,7 +204,7 @@ function validateConfigurationDefaultValues(
         }
         case "R":
         case "o": {
-          assertTruthyDefaultValue(configOption.defaultValue, name, result);
+          // we don't have a way of validating this default value
           continue;
         }
         case "b": {
@@ -317,21 +317,6 @@ function assertFunctionDefaultValue(
       util.diag(
         ConfigurationDiagnosticMessage.ASP_105_Invalid_Configuration_Default_Value_Is_Incorrect_Type,
         [name, Object.prototype.toString.call(val).slice(8, -1), "Function"],
-      ),
-    );
-  }
-}
-
-function assertTruthyDefaultValue(
-  val: any,
-  name: string,
-  result: util.ConfigurationState,
-): void {
-  if (val == null) {
-    result.diagnostics.push(
-      util.diag(
-        ConfigurationDiagnosticMessage.ASP_105_Invalid_Configuration_Default_Value_Is_Incorrect_Type,
-        [name, Object.prototype.toString.call(val).slice(8, -1), "Anything"],
       ),
     );
   }

@@ -252,5 +252,32 @@ describe("parser", () => {
     expect(filter(result, ["diagnostics"])).toMatchSnapshot("array of strings wrong type");
   });
 
+  test("invalid boolean value", () => {
+    const config: Configuration = {
+      config: {
+        name: "config",
+        type: "R",
+        defaultValue: {},
+        alias: "c",
+      },
+      test: {
+        name: "test",
+        type: "b",
+        defaultValue: "incorrect!",
+      },
+    };
+    const result = parse([], config, globalEnv);
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot("invalid boolean default value");
+  });
 
+  test("rest args", () => {
+    const config: Configuration = {
+      config: {
+        name: "config",
+        type: "R",
+      },
+    };
+    const result = parse(["--", "rest!", "one", "two", "three"], config, globalEnv);
+    expect(filter(result, ["rest"])).toMatchSnapshot("rest args");
+  });
 });
