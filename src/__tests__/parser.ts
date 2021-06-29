@@ -198,4 +198,39 @@ describe("parser", () => {
     expect(filter(result, ["diagnostics"])).toMatchSnapshot("validate executable flag");
   });
 
+  test("when regex option default is not regex", () => {
+    const config: Configuration = {
+      config: {
+        name: "config",
+        type: "R",
+        defaultValue: {},
+        alias: "c",
+      },
+      test: {
+        name: "test",
+        type: "r",
+        defaultValue: 1,
+      },
+    };
+    const result = parse([], config, globalEnv);
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot("regex default value error");
+  });
+
+  test("array of numbers default value when default value is an array, but also incorrect", () => {
+    const config: Configuration = {
+      config: {
+        name: "config",
+        type: "R",
+        defaultValue: {},
+        alias: "c",
+      },
+      test: {
+        name: "test",
+        type: "N",
+        defaultValue: ["oops", "wrong", "type"],
+      },
+    };
+    const result = parse([], config, globalEnv);
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot("array of numbers wrong type");
+  });
 });

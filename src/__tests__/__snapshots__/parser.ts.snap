@@ -1,5 +1,15 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`parser array of numbers default value when default value is an array, but also incorrect: array of numbers wrong type 1`] = `
+Object {
+  "diagnostics": Array [
+    "Invalid configuration option \`--test\`: Default value is type 'String', expected 'Number'",
+    "Invalid configuration option \`--test\`: Default value is type 'String', expected 'Number'",
+    "Invalid configuration option \`--test\`: Default value is type 'String', expected 'Number'",
+  ],
+}
+`;
+
 exports[`parser array of numbers default value: validate array of numbers 1`] = `
 Object {
   "diagnostics": Array [
@@ -141,5 +151,13 @@ ConfigurationState {
       },
     },
   },
+}
+`;
+
+exports[`parser when regex option default is not regex: regex default value error 1`] = `
+Object {
+  "diagnostics": Array [
+    "Invalid configuration option \`--test\`: Default value is type 'Number', expected 'RegExp'",
+  ],
 }
 `;
