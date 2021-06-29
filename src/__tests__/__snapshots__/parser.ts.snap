@@ -1,5 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`parser already provided flags: already provided flag 1`] = `
+Object {
+  "diagnostics": Array [
+    "Invalid CLI argument '--test': Option already provided",
+  ],
+}
+`;
+
 exports[`parser array of numbers default value when default value is an array, but also incorrect: array of numbers wrong type 1`] = `
 Object {
   "diagnostics": Array [
@@ -79,6 +87,14 @@ Object {
 }
 `;
 
+exports[`parser flag that requires another argument in the wrong position: not passing an argument to a flag that requires another argument 1`] = `
+Object {
+  "diagnostics": Array [
+    "Invalid CLI argument '--test': Argument missing",
+  ],
+}
+`;
+
 exports[`parser invalid boolean value: invalid boolean default value 1`] = `
 Object {
   "diagnostics": Array [
@@ -109,6 +125,46 @@ exports[`parser options must match names: option names must match 1`] = `
 Object {
   "diagnostics": Array [
     "Invalid configuration option '--test': Option key 'test' does not match name 'not-test'",
+  ],
+}
+`;
+
+exports[`parser parsing true and false strings: parsing true and false strings with boolean flags 1`] = `
+Object {
+  "diagnostics": Array [],
+  "values": Map {
+    Object {
+      "name": "config",
+      "type": "R",
+    } => Object {
+      "providedBy": 0,
+      "value": null,
+    },
+    Object {
+      "name": "test1",
+      "type": "b",
+    } => Object {
+      "providedBy": 2,
+      "value": "true",
+    },
+    Object {
+      "name": "test2",
+      "type": "b",
+    } => Object {
+      "providedBy": 2,
+      "value": "false",
+    },
+  },
+}
+`;
+
+exports[`parser rest args: rest args 1`] = `
+Object {
+  "rest": Array [
+    "rest!",
+    "one",
+    "two",
+    "three",
   ],
 }
 `;

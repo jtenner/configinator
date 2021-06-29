@@ -280,4 +280,58 @@ describe("parser", () => {
     const result = parse(["--", "rest!", "one", "two", "three"], config, globalEnv);
     expect(filter(result, ["rest"])).toMatchSnapshot("rest args");
   });
+
+  test("flag that requires another argument in the wrong position", () => {
+    const config: Configuration = {
+      config: {
+        name: "config",
+        type: "R",
+      },
+      test: {
+        name: "test",
+        alias: "t",
+        type: "s",
+      },
+    };
+    const result = parse(["-t"], config, globalEnv);
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot("not passing an argument to a flag that requires another argument");
+  });
+
+  test("already provided flags", () => {
+    const config: Configuration = {
+      config: {
+        name: "config",
+        type: "R",
+      },
+      test: {
+        name: "test",
+        alias: "t",
+        type: "s",
+      },
+    };
+    const result = parse(["-t", "blah", "-t", "meh"], config, globalEnv);
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot("already provided flag");
+  });
+
+  test("parsing true and false strings", () => {
+    const config: Configuration = {
+      config: {
+        name: "config",
+        type: "R",
+      },
+      test1: {
+        name: "test1",
+        type: "b",
+      },
+      test2: {
+        name: "test2",
+        type: "b",
+      },
+    };
+    const result = parse([
+      "--test1", "true",
+      "--test2", "false",
+    ], config, globalEnv);
+    expect(filter(result, ["values", "diagnostics"])).toMatchSnapshot("parsing true and false strings with boolean flags");
+  });
 });

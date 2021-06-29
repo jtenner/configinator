@@ -159,6 +159,7 @@ export function diag(
   );
 }
 
+
 export enum ConfigurationArgvTokenType {
   Default,
   Flag,
@@ -167,6 +168,7 @@ export enum ConfigurationArgvTokenType {
   AlreadyProvided,
   InvalidFlag,
   ArgumentMissing,
+  Unprovided
 }
 
 export type ConfigurationArgvToken = {

@@ -35,47 +35,48 @@ export function parse(
 
   // use default config option, and get the module if it exists
   const configLocation = resolveDefaultOptionValue(result, env, "config");
-  const configLocationValue = configLocation.value as util.ConfigurationRequire;
-  const configModuleAbsoluteLocation = path.join(configLocationValue.basedir, configLocationValue.filename);
 
-  let configModule = configLocationValue.getModule();
-
-  // if there's a configuration
-  if (configModule) {
-    // validate the shape and values
-    validateConfigModuleShape(configModule, configModuleAbsoluteLocation, result);
-    validateConfigModuleOptionValues(configModule, configModuleAbsoluteLocation, result);
-    if (result.diagnostics.length > 0) return result;
-
-    // mutable config directory (for later use with extension)
-    let configDir = path.dirname(configModuleAbsoluteLocation);
-
-    // if this configuration provides any unset values, set them
-    resolveUnsetOptionsFromConfigModule(configModule, result);
-
-    // if there is a config extension
-    while (configModule.extends) {
-      // locate it
-      const extendedConfigFileLocation = path.join(
-        configDir,
-        configModule.extends,
-      );
-      const extendedConfigFileDir = path.dirname(extendedConfigFileLocation);
-
-      try {
-        configModule = require(extendedConfigFileLocation);
-      } catch (_ex) {
-        break;
-      }
-
-      // validate shape and values
-      validateConfigModuleShape(configModule, extendedConfigFileLocation, result);
-      validateConfigModuleOptionValues(configModule, extendedConfigFileLocation, result);
+  if (configLocation.value) {
+    const configLocationValue = configLocation.value as util.ConfigurationRequire;
+    const configModuleAbsoluteLocation = path.join(configLocationValue.basedir, configLocationValue.filename);
+    let configModule = configLocationValue.getModule();
+    // if there's a configuration
+    if (configModule) {
+      // validate the shape and values
+      validateConfigModuleShape(configModule, configModuleAbsoluteLocation, result);
+      validateConfigModuleOptionValues(configModule, configModuleAbsoluteLocation, result);
       if (result.diagnostics.length > 0) return result;
 
-      // set the unset values and check for configuration extension
+      // mutable config directory (for later use with extension)
+      let configDir = path.dirname(configModuleAbsoluteLocation);
+
+      // if this configuration provides any unset values, set them
       resolveUnsetOptionsFromConfigModule(configModule, result);
-      configDir = extendedConfigFileDir;
+
+      // if there is a config extension
+      while (configModule.extends) {
+        // locate it
+        const extendedConfigFileLocation = path.join(
+          configDir,
+          configModule.extends,
+        );
+        const extendedConfigFileDir = path.dirname(extendedConfigFileLocation);
+
+        try {
+          configModule = require(extendedConfigFileLocation);
+        } catch (_ex) {
+          break;
+        }
+
+        // validate shape and values
+        validateConfigModuleShape(configModule, extendedConfigFileLocation, result);
+        validateConfigModuleOptionValues(configModule, extendedConfigFileLocation, result);
+        if (result.diagnostics.length > 0) return result;
+
+        // set the unset values and check for configuration extension
+        resolveUnsetOptionsFromConfigModule(configModule, result);
+        configDir = extendedConfigFileDir;
+      }
     }
   }
 
@@ -384,12 +385,12 @@ function tokenizeInput(
     }
 
     // obtain the next argument for parsing sake
-    const nextArg: string | null = argv.length >= i + 1 ? argv[i + 1] : null;
+    const nextArg: string | null = argv.length <= i + 1 ? null : argv[i + 1];
 
     // the option was found
     if (option) {
       const value = configValues.get(option);
-      if (value) {
+      if (value && value.providedBy !== util.ConfigurationOptionProvidedBy.Unprovided) {
         // it was provided. We should skip it and move onto the next argument
         result.push({
           option,
@@ -490,7 +491,7 @@ function tokenizeInput(
             // there's an error here, next arg must be provided
             result.push({
               option,
-              type: util.ConfigurationArgvTokenType.InvalidFlag,
+              type: util.ConfigurationArgvTokenType.Unprovided,
               value: null,
             });
             break;
@@ -536,6 +537,13 @@ function resolveCliProvidedOptions(
 ): void {
   for (const cliToken of cliTokens) {
     switch (cliToken.type) {
+      case util.ConfigurationArgvTokenType.Unprovided: {
+        result.diagnostics.push(util.diag(
+          ConfigurationDiagnosticMessage.ASP_202_Invalid_CLI_Argument_Missing,
+          [cliToken.option!.name]
+        ));
+        continue;
+      }
       case util.ConfigurationArgvTokenType.AlreadyProvided: {
         result.diagnostics.push(
           util.diag(
