@@ -334,4 +334,93 @@ describe("parser", () => {
     ], config, globalEnv);
     expect(filter(result, ["values", "diagnostics"])).toMatchSnapshot("parsing true and false strings with boolean flags");
   });
+
+  test("parsing string array argument missing", () => {
+    const config: Configuration = {
+      config: {
+        name: "config",
+        type: "R",
+      },
+      test: {
+        name: "test",
+        type: "S",
+      }
+    };
+    const result = parse([
+      "--test",
+    ], config, globalEnv);
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot("array parameter with argument missing");
+  });
+
+  test("parsing string array argument missing, next is a flag", () => {
+    const config: Configuration = {
+      config: {
+        name: "config",
+        type: "R",
+      },
+      test: {
+        name: "test",
+        type: "S",
+      },
+      b: {
+        name: "b",
+        type: "b",
+      }
+    };
+    const result = parse([
+      "--test", "--b"
+    ], config, globalEnv);
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot("array parameter with argument missing, next is a flag");
+  });
+
+  test("parsing string array error", () => {
+    const config: Configuration = {
+      config: {
+        name: "config",
+        type: "R",
+      },
+      test: {
+        name: "test",
+        type: "S",
+      }
+    };
+    const result = parse([
+      "--test", "--"
+    ], config, globalEnv);
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot("string array arguemnts invalid");
+  });
+
+  test("parsing string array success", () => {
+    const config: Configuration = {
+      config: {
+        name: "config",
+        type: "R",
+      },
+      test: {
+        name: "test",
+        type: "S",
+      }
+    };
+    const result = parse([
+      "--test", "one,two,three"
+    ], config, globalEnv);
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot("string array success");
+  });
+
+  test("string parameters", () => {
+    const config: Configuration = {
+      config: {
+        name: "config",
+        type: "R",
+      },
+      test: {
+        name: "test",
+        type: "s",
+      }
+    };
+    const result = parse([
+      "--test", "this should work"
+    ], config, globalEnv);
+    expect(filter(result, ["diagnostics", "values"])).toMatchSnapshot("string arguments");
+  });
 });

@@ -129,6 +129,36 @@ Object {
 }
 `;
 
+exports[`parser parsing string array argument missing, next is a flag: array parameter with argument missing, next is a flag 1`] = `
+Object {
+  "diagnostics": Array [
+    "Invalid CLI argument '--test': Argument missing",
+  ],
+}
+`;
+
+exports[`parser parsing string array argument missing: array parameter with argument missing 1`] = `
+Object {
+  "diagnostics": Array [
+    "Invalid CLI argument '--test': Argument missing",
+  ],
+}
+`;
+
+exports[`parser parsing string array error: string array arguemnts invalid 1`] = `
+Object {
+  "diagnostics": Array [
+    "Invalid CLI argument '--test': Argument missing",
+  ],
+}
+`;
+
+exports[`parser parsing string array success: string array success 1`] = `
+Object {
+  "diagnostics": Array [],
+}
+`;
+
 exports[`parser parsing true and false strings: parsing true and false strings with boolean flags 1`] = `
 Object {
   "diagnostics": Array [],
@@ -223,6 +253,28 @@ ConfigurationState {
         "filename": "",
         "getModule": [Function],
       },
+    },
+  },
+}
+`;
+
+exports[`parser string parameters: string arguments 1`] = `
+Object {
+  "diagnostics": Array [],
+  "values": Map {
+    Object {
+      "name": "config",
+      "type": "R",
+    } => Object {
+      "providedBy": 0,
+      "value": null,
+    },
+    Object {
+      "name": "test",
+      "type": "s",
+    } => Object {
+      "providedBy": 2,
+      "value": "this should work",
     },
   },
 }
