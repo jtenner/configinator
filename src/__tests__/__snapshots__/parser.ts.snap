@@ -258,6 +258,14 @@ ConfigurationState {
 }
 `;
 
+exports[`parser string parameters fail: string arguments fail 1`] = `
+Object {
+  "diagnostics": Array [
+    "Invalid CLI argument '--test': Argument missing",
+  ],
+}
+`;
+
 exports[`parser string parameters: string arguments 1`] = `
 Object {
   "diagnostics": Array [],

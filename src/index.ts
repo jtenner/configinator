@@ -474,7 +474,7 @@ function tokenizeInput(
               // there's a problem, it's another flag, or rest arg
               result.push({
                 option,
-                type: util.ConfigurationArgvTokenType.InvalidFlag,
+                type: util.ConfigurationArgvTokenType.ArgumentMissing,
                 value: null,
               });
               break;

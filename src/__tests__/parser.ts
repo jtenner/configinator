@@ -423,4 +423,21 @@ describe("parser", () => {
     ], config, globalEnv);
     expect(filter(result, ["diagnostics", "values"])).toMatchSnapshot("string arguments");
   });
+
+  test("string parameters fail", () => {
+    const config: Configuration = {
+      config: {
+        name: "config",
+        type: "R",
+      },
+      test: {
+        name: "test",
+        type: "s",
+      }
+    };
+    const result = parse([
+      "--test", "--"
+    ], config, globalEnv);
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot("string arguments fail");
+  });
 });
