@@ -604,4 +604,23 @@ describe("parser", () => {
     expect(filter(result, ["diagnostics"])).toMatchSnapshot("glob values");
     snapshotValues(result);
   });
+
+  test("obtaining files via glob array", () => {
+    const config: Configuration = {
+      config: {
+        name: "config",
+        type: "R",
+        defaultValue: "src/__test_files__/default.config.js",
+      },
+      file: {
+        name: "file",
+        type: "G",
+      },
+    };
+    const result = parse([
+      "--file", "src/__test_files__/a.txt,src/__test_files__/b.txt",
+    ], config, globalEnv);
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot("glob values");
+    snapshotValues(result);
+  });
 });

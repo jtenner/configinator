@@ -160,6 +160,22 @@ Object {
 }
 `;
 
+exports[`parser obtaining files via glob array: config - module 1`] = `
+Object {
+  "options": Object {},
+}
+`;
+
+exports[`parser obtaining files via glob array: file - glob 0 1`] = `null`;
+
+exports[`parser obtaining files via glob array: file - glob 1 1`] = `null`;
+
+exports[`parser obtaining files via glob array: glob values 1`] = `
+Object {
+  "diagnostics": Array [],
+}
+`;
+
 exports[`parser obtaining files via glob: config - module 1`] = `
 Object {
   "options": Object {},
