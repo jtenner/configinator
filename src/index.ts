@@ -668,6 +668,14 @@ function resolveCliProvidedOptions(
   }
 }
 
+const getModule = (requirePath: string, dirname: string) => () => {
+  try {
+    return require(path.join(dirname, requirePath));
+  } catch (_ex) {
+    return null;
+  }
+};
+
 function requireValue(
   requirePath: string,
   env: UserDefinedEnvironment,
@@ -676,13 +684,7 @@ function requireValue(
   value.value = {
     filename: "",
     basedir: env.cwd,
-    getModule: () => {
-      try {
-        return require(path.join(env.cwd, requirePath));
-      } catch (_ex) {
-        return null;
-      }
-    },
+    getModule: getModule(requirePath, env.cwd),
   } as util.ConfigurationRequire;
 }
 
@@ -694,13 +696,7 @@ function requireDefaultValue(
   value.value = {
     filename: requirePath,
     basedir: env.cwd,
-    getModule: () => {
-      try {
-        return require(path.join(env.cwd, requirePath));
-      } catch(ex) {
-        return null;
-      }
-    },
+    getModule: getModule(requirePath, env.cwd),
   } as util.ConfigurationRequire;
 }
 
