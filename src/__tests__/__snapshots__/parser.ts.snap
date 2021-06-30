@@ -130,6 +130,39 @@ Object {
 }
 `;
 
+exports[`parser obtaining file values: file contents 1`] = `"a"`;
+
+exports[`parser obtaining file values: file value 1`] = `
+Object {
+  "diagnostics": Array [],
+  "values": Map {
+    Object {
+      "defaultValue": "src/__test_files__/default.config.js",
+      "name": "config",
+      "type": "R",
+    } => Object {
+      "providedBy": 0,
+      "value": Object {
+        "basedir": "C:\\\\Users\\\\Joshua Tenner\\\\projects\\\\configinator",
+        "filename": "src/__test_files__/default.config.js",
+        "getModule": [Function],
+      },
+    },
+    Object {
+      "name": "file",
+      "type": "f",
+    } => Object {
+      "providedBy": 2,
+      "value": Object {
+        "basedir": "C:\\\\Users\\\\Joshua Tenner\\\\projects\\\\configinator",
+        "filename": "src/__test_files__/a.txt",
+        "getContents": [Function],
+      },
+    },
+  },
+}
+`;
+
 exports[`parser options must match names: option names must match 1`] = `
 Object {
   "diagnostics": Array [
@@ -168,34 +201,17 @@ Object {
 }
 `;
 
+exports[`parser parsing true and false strings: config - module 1`] = `undefined`;
+
 exports[`parser parsing true and false strings: parsing true and false strings with boolean flags 1`] = `
 Object {
   "diagnostics": Array [],
-  "values": Map {
-    Object {
-      "name": "config",
-      "type": "R",
-    } => Object {
-      "providedBy": 0,
-      "value": null,
-    },
-    Object {
-      "name": "test1",
-      "type": "b",
-    } => Object {
-      "providedBy": 2,
-      "value": "true",
-    },
-    Object {
-      "name": "test2",
-      "type": "b",
-    } => Object {
-      "providedBy": 2,
-      "value": "false",
-    },
-  },
 }
 `;
+
+exports[`parser parsing true and false strings: test1 1`] = `"true"`;
+
+exports[`parser parsing true and false strings: test2 1`] = `"false"`;
 
 exports[`parser rest args: rest args 1`] = `
 Object {
@@ -209,61 +225,11 @@ Object {
 `;
 
 exports[`parser simple arguments: simple argument 1`] = `
-ConfigurationState {
+Object {
   "args": Array [
     "arg1",
   ],
-  "argv": null,
-  "config": Object {
-    "config": Object {
-      "alias": "c",
-      "defaultValue": Object {},
-      "description": "Provide a configuration",
-      "name": "config",
-      "optional": true,
-      "type": "R",
-    },
-  },
-  "configTree": null,
   "diagnostics": Array [],
-  "optionsByAlias": Map {
-    "c" => Object {
-      "alias": "c",
-      "defaultValue": Object {},
-      "description": "Provide a configuration",
-      "name": "config",
-      "optional": true,
-      "type": "R",
-    },
-  },
-  "optionsByName": Map {
-    "config" => Object {
-      "alias": "c",
-      "defaultValue": Object {},
-      "description": "Provide a configuration",
-      "name": "config",
-      "optional": true,
-      "type": "R",
-    },
-  },
-  "rest": Array [],
-  "values": Map {
-    Object {
-      "alias": "c",
-      "defaultValue": Object {},
-      "description": "Provide a configuration",
-      "name": "config",
-      "optional": true,
-      "type": "R",
-    } => Object {
-      "providedBy": 0,
-      "value": Object {
-        "basedir": "",
-        "filename": "",
-        "getModule": [Function],
-      },
-    },
-  },
 }
 `;
 

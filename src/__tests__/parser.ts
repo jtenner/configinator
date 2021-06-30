@@ -1,7 +1,34 @@
-import { parse, Configuration, UserDefinedEnvironment } from "../index";
+import { parse, Configuration, UserDefinedEnvironment, ConfigurationState } from "../index";
 import { ConfigurationOptionType } from "../util";
 const fs = require("fs");
 const path = require("path");
+
+function snapshotValues(result: ConfigurationState): void {
+  for (const optionValuePair of result.values) {
+    const [option, value] = optionValuePair;
+    switch (option.type) {
+      case "F": {
+        let i = 0;
+        for (const file of value.value) {
+          expect(file.getContents()).toMatchSnapshot(`${option.name} - file ${i++}`);
+        }
+        continue;
+      }
+      case "f": {
+        expect(value.value.getContents()).toMatchSnapshot(`${option.name} - file`);
+        continue;
+      }
+      case "R": {
+        expect(value.value?.getModule()).toMatchSnapshot(`${option.name} - module`);
+        continue;
+      }
+      default: {
+        expect(value.value).toMatchSnapshot(`${option.name}`);
+        continue;
+      }
+    }
+  }
+}
 
 const globalEnv = {
   cwd: process.cwd(),
@@ -40,7 +67,7 @@ describe("parser", () => {
         config: {
           name: "config",
           type: "R",
-          defaultValue: {},
+          defaultValue: "src/__test_files__/default.config.js",
         },
       },
       globalEnv,
@@ -56,13 +83,14 @@ describe("parser", () => {
         name: "config",
         type: "R",
         alias: "c",
-        defaultValue: {},
+        defaultValue: "src/__test_files__/default.config.js",
         description: "Provide a configuration",
         optional: true,
       },
     };
+
     const result = parse(["arg1"], config, globalEnv);
-    expect(result).toMatchSnapshot("simple argument");
+    expect(filter(result, ["args", "diagnostics"])).toMatchSnapshot("simple argument");
   });
 
   test("duplicate aliases", () => {
@@ -70,7 +98,7 @@ describe("parser", () => {
       config: {
         name: "config",
         type: "R",
-        defaultValue: {},
+        defaultValue: "src/__test_files__/default.config.js",
         alias: "c",
       },
       duplicate: {
@@ -89,7 +117,7 @@ describe("parser", () => {
       config: {
         name: "config",
         type: "R",
-        defaultValue: {},
+        defaultValue: "src/__test_files__/default.config.js",
         alias: "c",
       },
       bad: {
@@ -224,7 +252,7 @@ describe("parser", () => {
       config: {
         name: "config",
         type: "R",
-        defaultValue: {},
+        defaultValue: "src/__test_files__/default.config.js",
         alias: "c",
       },
       test: {
@@ -370,9 +398,10 @@ describe("parser", () => {
       config,
       globalEnv,
     );
-    expect(filter(result, ["values", "diagnostics"])).toMatchSnapshot(
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot(
       "parsing true and false strings with boolean flags",
     );
+    snapshotValues(result);
   });
 
   test("parsing string array argument missing", () => {
@@ -509,5 +538,26 @@ describe("parser", () => {
     };
     const result = parse(["--unknown"], config, globalEnv);
     expect(filter(result, ["diagnostics"])).toMatchSnapshot("unknown flag");
+  });
+
+  test("obtaining file values", () => {
+    const config: Configuration = {
+      config: {
+        name: "config",
+        type: "R",
+        defaultValue: "src/__test_files__/default.config.js",
+      },
+      file: {
+        name: "file",
+        type: "f",
+      },
+    };
+    const result = parse([
+      "--file", "src/__test_files__/a.txt",
+    ], config, globalEnv);
+    expect(filter(result, ["values", "diagnostics"])).toMatchSnapshot("file value");
+    const fileOption = result.optionsByName.get("file")!;
+    const fileContents = result.values.get(fileOption)!.value.getContents();
+    expect(fileContents).toMatchSnapshot("file contents");
   });
 });

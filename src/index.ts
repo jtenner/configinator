@@ -697,14 +697,14 @@ function requireValue(
 }
 
 function requireDefaultValue(
-  requireValue: any,
-  _env: UserDefinedEnvironment,
+  requirePath: any,
+  env: UserDefinedEnvironment,
   value: util.ConfigurationOptionValue,
 ) {
   value.value = {
-    filename: "",
-    basedir: "",
-    getModule: () => requireValue,
+    filename: requirePath,
+    basedir: env.cwd,
+    getModule: () => require(path.join(env.cwd, requirePath)),
   } as util.ConfigurationRequire;
 }
 
