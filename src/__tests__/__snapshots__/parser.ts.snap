@@ -125,6 +125,22 @@ Object {
 }
 `;
 
+exports[`parser g flag default value: config - module 1`] = `
+Object {
+  "options": Object {},
+}
+`;
+
+exports[`parser g flag default value: f flag default values 1`] = `
+Object {
+  "diagnostics": Array [],
+}
+`;
+
+exports[`parser g flag default value: file - glob 0 1`] = `"a"`;
+
+exports[`parser g flag default value: file - glob 1 1`] = `"b"`;
+
 exports[`parser invalid boolean value: invalid boolean default value 1`] = `
 Object {
   "diagnostics": Array [
