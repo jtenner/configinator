@@ -9,6 +9,7 @@ export enum ConfigurationDiagnosticMessage {
   ASP_201_Invalid_CLI_Argument_Invalid_Flag = "Invalid CLI argument '{0}': Option is not valid",
   ASP_202_Invalid_CLI_Argument_Missing = "Invalid CLI argument '--{0}': Argument missing",
   ASP_203_Invalid_CLI_Argument_Invalid_Option_Type = "Invalid CLI argument '--{0}': Invalid option type '{1}'",
+  ASP_204_Invalid_CLI_Argument_Cannot_Be_Passed = "Invalid CLI argument '--{0}': option has type '{1}' and cannot be passed via argv",
   ASP_300_Invalid_Configuration_Must_Be_An_Object = "Invalid Configuration at '{0}': Must be an object",
   ASP_301_Invalid_Configuration_Shape_Type_Expected = "Invalid Configuration at '{0}': Property '{1}' must be '{2}', received '{3}'",
   ASP_302_Invalid_Configuration_Property_Type_Expected = "Invalid Configuration Option at '{0}': Property '{1}' must be '{2}', received '{3}'",

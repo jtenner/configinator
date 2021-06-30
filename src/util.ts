@@ -168,6 +168,7 @@ export enum ConfigurationArgvTokenType {
   InvalidFlag,
   ArgumentMissing,
   Unprovided,
+  CannotBePassed,
 }
 
 export type ConfigurationArgvToken = {

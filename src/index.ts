@@ -526,7 +526,7 @@ function tokenizeInput(
           // this is a problem, argv cannot provide this option
           result.push({
             option,
-            type: util.ConfigurationArgvTokenType.InvalidFlag,
+            type: util.ConfigurationArgvTokenType.CannotBePassed,
             value: null,
           });
           break;
@@ -560,6 +560,15 @@ function resolveCliProvidedOptions(
 ): void {
   for (const cliToken of cliTokens) {
     switch (cliToken.type) {
+      case util.ConfigurationArgvTokenType.CannotBePassed: {
+        result.diagnostics.push(
+          util.diag(
+            ConfigurationDiagnosticMessage.ASP_204_Invalid_CLI_Argument_Cannot_Be_Passed,
+            [cliToken.option!.name, cliToken.option!.type],
+          ),
+        );
+        continue;
+      }
       case util.ConfigurationArgvTokenType.Unprovided: {
         result.diagnostics.push(
           util.diag(

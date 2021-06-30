@@ -479,4 +479,23 @@ describe("parser", () => {
       "string arguments fail",
     );
   });
+
+  test("o and e flags can't be passed via argv", () => {
+    const config: Configuration = {
+      config: {
+        name: "config",
+        type: "R",
+      },
+      o: {
+        name: "o",
+        type: "o",
+      },
+      e: {
+        name: "e",
+        type: "e",
+      },
+    };
+    const result = parse(["--e", "--o"], config, globalEnv);
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot("o and e flags");
+  });
 });

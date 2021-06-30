@@ -121,6 +121,15 @@ Object {
 }
 `;
 
+exports[`parser o and e flags can't be passed via argv: o and e flags 1`] = `
+Object {
+  "diagnostics": Array [
+    "Invalid CLI argument '--e': option has type 'e' and cannot be passed via argv",
+    "Invalid CLI argument '--o': option has type 'o' and cannot be passed via argv",
+  ],
+}
+`;
+
 exports[`parser options must match names: option names must match 1`] = `
 Object {
   "diagnostics": Array [
