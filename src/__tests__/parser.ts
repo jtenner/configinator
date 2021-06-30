@@ -623,4 +623,23 @@ describe("parser", () => {
     expect(filter(result, ["diagnostics"])).toMatchSnapshot("glob values");
     snapshotValues(result);
   });
+
+  test("obtaining numbers via N flag", () => {
+    const config: Configuration = {
+      config: {
+        name: "config",
+        type: "R",
+        defaultValue: "src/__test_files__/default.config.js",
+      },
+      nums: {
+        name: "nums",
+        type: "N",
+      },
+    };
+    const result = parse([
+      "--nums", "1,2,3",
+    ], config, globalEnv);
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot("num diagnostics");
+    snapshotValues(result);
+  });
 });
