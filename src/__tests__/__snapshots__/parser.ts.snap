@@ -130,6 +130,22 @@ Object {
 }
 `;
 
+exports[`parser obtaining file array values: config - module 1`] = `
+Object {
+  "options": Object {},
+}
+`;
+
+exports[`parser obtaining file array values: file - file 0 1`] = `"a"`;
+
+exports[`parser obtaining file array values: file - file 1 1`] = `"b"`;
+
+exports[`parser obtaining file array values: file values 1`] = `
+Object {
+  "diagnostics": Array [],
+}
+`;
+
 exports[`parser obtaining file values: config - module 1`] = `
 Object {
   "options": Object {},
@@ -139,6 +155,22 @@ Object {
 exports[`parser obtaining file values: file - file 1`] = `"a"`;
 
 exports[`parser obtaining file values: file value 1`] = `
+Object {
+  "diagnostics": Array [],
+}
+`;
+
+exports[`parser obtaining files via glob: config - module 1`] = `
+Object {
+  "options": Object {},
+}
+`;
+
+exports[`parser obtaining files via glob: file - glob 0 1`] = `"a"`;
+
+exports[`parser obtaining files via glob: file - glob 1 1`] = `"b"`;
+
+exports[`parser obtaining files via glob: glob values 1`] = `
 Object {
   "diagnostics": Array [],
 }

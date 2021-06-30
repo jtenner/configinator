@@ -584,7 +584,6 @@ function resolveCliProvidedOptions(
       case util.ConfigurationArgvTokenType.Flag: {
         const option = cliToken.option!;
         const value = result.values.get(option)!;
-
         // todo: parse flags
         switch (option.type) {
           case "F": {

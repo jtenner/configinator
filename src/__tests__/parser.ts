@@ -22,6 +22,14 @@ function snapshotValues(result: ConfigurationState): void {
         expect(value.value?.getModule()).toMatchSnapshot(`${option.name} - module`);
         continue;
       }
+      case "G":
+      case "g": {
+        let i = 0;
+        for (const file of value.value) {
+          expect(file.getContents()).toMatchSnapshot(`${option.name} - glob ${i++}`);
+        }
+        continue;
+      }
       default: {
         expect(value.value).toMatchSnapshot(`${option.name}`);
         continue;
@@ -556,6 +564,44 @@ describe("parser", () => {
       "--file", "src/__test_files__/a.txt",
     ], config, globalEnv);
     expect(filter(result, ["diagnostics"])).toMatchSnapshot("file value");
+    snapshotValues(result);
+  });
+
+  test("obtaining file array values", () => {
+    const config: Configuration = {
+      config: {
+        name: "config",
+        type: "R",
+        defaultValue: "src/__test_files__/default.config.js",
+      },
+      file: {
+        name: "file",
+        type: "F",
+      },
+    };
+    const result = parse([
+      "--file", "src/__test_files__/a.txt,src/__test_files__/b.txt",
+    ], config, globalEnv);
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot("file values");
+    snapshotValues(result);
+  });
+
+  test("obtaining files via glob", () => {
+    const config: Configuration = {
+      config: {
+        name: "config",
+        type: "R",
+        defaultValue: "src/__test_files__/default.config.js",
+      },
+      file: {
+        name: "file",
+        type: "g",
+      },
+    };
+    const result = parse([
+      "--file", "src/__test_files__/*.txt",
+    ], config, globalEnv);
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot("glob values");
     snapshotValues(result);
   });
 });
