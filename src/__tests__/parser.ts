@@ -555,9 +555,7 @@ describe("parser", () => {
     const result = parse([
       "--file", "src/__test_files__/a.txt",
     ], config, globalEnv);
-    expect(filter(result, ["values", "diagnostics"])).toMatchSnapshot("file value");
-    const fileOption = result.optionsByName.get("file")!;
-    const fileContents = result.values.get(fileOption)!.value.getContents();
-    expect(fileContents).toMatchSnapshot("file contents");
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot("file value");
+    snapshotValues(result);
   });
 });

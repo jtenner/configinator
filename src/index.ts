@@ -628,15 +628,6 @@ function resolveCliProvidedOptions(
             value.value = cliToken.value;
             continue;
           }
-          default: {
-            result.diagnostics.push(
-              util.diag(
-                ConfigurationDiagnosticMessage.ASP_203_Invalid_CLI_Argument_Invalid_Option_Type,
-                [option.name, option.type],
-              ),
-            );
-            continue;
-          }
         }
       }
       case util.ConfigurationArgvTokenType.ArgumentMissing: {
