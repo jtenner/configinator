@@ -661,4 +661,24 @@ describe("parser", () => {
     expect(filter(result, ["diagnostics"])).toMatchSnapshot("num diagnostics");
     snapshotValues(result);
   });
+
+  test("obtaining module via R flag", () => {
+    const config: Configuration = {
+      config: {
+        name: "config",
+        type: "R",
+        defaultValue: "src/__test_files__/default.config.js",
+      },
+      val: {
+        name: "val",
+        type: "n",
+        defaultValue: -1,
+      },
+    };
+    const result = parse([
+      "--config", "src/__test_files__/example.js",
+    ], config, globalEnv);
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot("R diagnostics");
+    snapshotValues(result);
+  });
 });

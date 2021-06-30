@@ -192,6 +192,22 @@ Object {
 }
 `;
 
+exports[`parser obtaining module via R flag: R diagnostics 1`] = `
+Object {
+  "diagnostics": Array [],
+}
+`;
+
+exports[`parser obtaining module via R flag: config - module 1`] = `
+Object {
+  "options": Object {
+    "val": 42,
+  },
+}
+`;
+
+exports[`parser obtaining module via R flag: val 1`] = `42`;
+
 exports[`parser obtaining number via n flag: config - module 1`] = `
 Object {
   "options": Object {},
