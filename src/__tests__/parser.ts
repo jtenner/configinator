@@ -681,4 +681,25 @@ describe("parser", () => {
     expect(filter(result, ["diagnostics"])).toMatchSnapshot("R diagnostics");
     snapshotValues(result);
   });
+
+  test("obtaining regex via r flag", () => {
+    const config: Configuration = {
+      config: {
+        name: "config",
+        type: "R",
+        defaultValue: "src/__test_files__/default.config.js",
+      },
+      val: {
+        name: "val",
+        type: "r",
+      },
+    };
+    const result = parse([
+      "--val", ".*",
+    ], config, globalEnv);
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot("R diagnostics");
+    snapshotValues(result);
+  });
+
+
 });

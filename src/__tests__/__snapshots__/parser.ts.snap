@@ -242,6 +242,20 @@ Array [
 ]
 `;
 
+exports[`parser obtaining regex via r flag: R diagnostics 1`] = `
+Object {
+  "diagnostics": Array [],
+}
+`;
+
+exports[`parser obtaining regex via r flag: config - module 1`] = `
+Object {
+  "options": Object {},
+}
+`;
+
+exports[`parser obtaining regex via r flag: val 1`] = `/\\.\\*/`;
+
 exports[`parser options must match names: option names must match 1`] = `
 Object {
   "diagnostics": Array [
