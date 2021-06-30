@@ -94,7 +94,7 @@ export type ConfigurationOptionDefinition = {
 };
 
 export type Configuration = Record<string, ConfigurationOptionDefinition> & {
-  config: ConfigurationOptionDefinition,
+  config: ConfigurationOptionDefinition;
 };
 
 export enum ConfigurationOptionProvidedBy {
@@ -159,7 +159,6 @@ export function diag(
   );
 }
 
-
 export enum ConfigurationArgvTokenType {
   Default,
   Flag,
@@ -168,7 +167,7 @@ export enum ConfigurationArgvTokenType {
   AlreadyProvided,
   InvalidFlag,
   ArgumentMissing,
-  Unprovided
+  Unprovided,
 }
 
 export type ConfigurationArgvToken = {

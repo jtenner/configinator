@@ -37,14 +37,26 @@ export function parse(
   const configLocation = resolveDefaultOptionValue(result, env, "config");
 
   if (configLocation.value) {
-    const configLocationValue = configLocation.value as util.ConfigurationRequire;
-    const configModuleAbsoluteLocation = path.join(configLocationValue.basedir, configLocationValue.filename);
+    const configLocationValue =
+      configLocation.value as util.ConfigurationRequire;
+    const configModuleAbsoluteLocation = path.join(
+      configLocationValue.basedir,
+      configLocationValue.filename,
+    );
     let configModule = configLocationValue.getModule();
     // if there's a configuration
     if (configModule) {
       // validate the shape and values
-      validateConfigModuleShape(configModule, configModuleAbsoluteLocation, result);
-      validateConfigModuleOptionValues(configModule, configModuleAbsoluteLocation, result);
+      validateConfigModuleShape(
+        configModule,
+        configModuleAbsoluteLocation,
+        result,
+      );
+      validateConfigModuleOptionValues(
+        configModule,
+        configModuleAbsoluteLocation,
+        result,
+      );
       if (result.diagnostics.length > 0) return result;
 
       // mutable config directory (for later use with extension)
@@ -69,8 +81,16 @@ export function parse(
         }
 
         // validate shape and values
-        validateConfigModuleShape(configModule, extendedConfigFileLocation, result);
-        validateConfigModuleOptionValues(configModule, extendedConfigFileLocation, result);
+        validateConfigModuleShape(
+          configModule,
+          extendedConfigFileLocation,
+          result,
+        );
+        validateConfigModuleOptionValues(
+          configModule,
+          extendedConfigFileLocation,
+          result,
+        );
         if (result.diagnostics.length > 0) return result;
 
         // set the unset values and check for configuration extension
@@ -390,7 +410,10 @@ function tokenizeInput(
     // the option was found
     if (option) {
       const value = configValues.get(option);
-      if (value && value.providedBy !== util.ConfigurationOptionProvidedBy.Unprovided) {
+      if (
+        value &&
+        value.providedBy !== util.ConfigurationOptionProvidedBy.Unprovided
+      ) {
         // it was provided. We should skip it and move onto the next argument
         result.push({
           option,
@@ -538,10 +561,12 @@ function resolveCliProvidedOptions(
   for (const cliToken of cliTokens) {
     switch (cliToken.type) {
       case util.ConfigurationArgvTokenType.Unprovided: {
-        result.diagnostics.push(util.diag(
-          ConfigurationDiagnosticMessage.ASP_202_Invalid_CLI_Argument_Missing,
-          [cliToken.option!.name]
-        ));
+        result.diagnostics.push(
+          util.diag(
+            ConfigurationDiagnosticMessage.ASP_202_Invalid_CLI_Argument_Missing,
+            [cliToken.option!.name],
+          ),
+        );
         continue;
       }
       case util.ConfigurationArgvTokenType.AlreadyProvided: {
@@ -840,17 +865,23 @@ function validateConfigModuleShape(
     }
   }
 }
-function validateConfigModuleOptionValues(configModule: any, configLocation: string, result: util.ConfigurationState) {
+function validateConfigModuleOptionValues(
+  configModule: any,
+  configLocation: string,
+  result: util.ConfigurationState,
+) {
   if (!configModule) return;
   if (!configModule.options) return;
   for (const providedOptionEntry of Object.entries(configModule.options)) {
     const [providedOptionName, providedOptionValue] = providedOptionEntry;
     const option = result.optionsByName.get(providedOptionName);
     if (!option) {
-      result.diagnostics.push(util.diag(
-        ConfigurationDiagnosticMessage.ASP_303_Invalid_Configuration_Unexpected_Option,
-        [configLocation, providedOptionName],
-      ));
+      result.diagnostics.push(
+        util.diag(
+          ConfigurationDiagnosticMessage.ASP_303_Invalid_Configuration_Unexpected_Option,
+          [configLocation, providedOptionName],
+        ),
+      );
       continue;
     }
 
@@ -858,37 +889,77 @@ function validateConfigModuleOptionValues(configModule: any, configLocation: str
       case "S":
       case "G":
       case "F": {
-        assertArrayOfStringsValue(providedOptionValue, configLocation, providedOptionName, result);
+        assertArrayOfStringsValue(
+          providedOptionValue,
+          configLocation,
+          providedOptionName,
+          result,
+        );
         continue;
       }
       case "s":
       case "g":
       case "f": {
-        assertStringValue(providedOptionValue, configLocation, providedOptionName, result);
+        assertStringValue(
+          providedOptionValue,
+          configLocation,
+          providedOptionName,
+          result,
+        );
         continue;
       }
       case "b": {
-        assertBooleanValue(providedOptionValue, configLocation, providedOptionName, result);
+        assertBooleanValue(
+          providedOptionValue,
+          configLocation,
+          providedOptionName,
+          result,
+        );
         continue;
       }
       case "e": {
-        assertFunctionValue(providedOptionValue, configLocation, providedOptionName, result);
+        assertFunctionValue(
+          providedOptionValue,
+          configLocation,
+          providedOptionName,
+          result,
+        );
         continue;
       }
       case "o": {
-        assertObjectValue(providedOptionValue, configLocation, providedOptionName, result);
+        assertObjectValue(
+          providedOptionValue,
+          configLocation,
+          providedOptionName,
+          result,
+        );
         continue;
       }
       case "N": {
-        assertArrayOfNumbersValue(providedOptionValue, configLocation, providedOptionName, result);
+        assertArrayOfNumbersValue(
+          providedOptionValue,
+          configLocation,
+          providedOptionName,
+          result,
+        );
         continue;
       }
       case "n": {
-        assertNumberValue(providedOptionValue, configLocation, providedOptionName, result);
+        assertNumberValue(
+          providedOptionValue,
+          configLocation,
+          providedOptionName,
+          result,
+        );
         continue;
       }
       case "r": {
-        assertRegExpValue(providedOptionValue, configLocation, providedOptionName, result);
+        assertRegExpValue(
+          providedOptionValue,
+          configLocation,
+          providedOptionName,
+          result,
+        );
         continue;
       }
     }
@@ -909,7 +980,12 @@ function assertArrayOfStringsValue(
     result.diagnostics.push(
       util.diag(
         ConfigurationDiagnosticMessage.ASP_304_Invalid_Configuration_Option_Type,
-        [configLocation, name, Object.prototype.toString.call(val).slice(8, -1), "Array"],
+        [
+          configLocation,
+          name,
+          Object.prototype.toString.call(val).slice(8, -1),
+          "Array",
+        ],
       ),
     );
   }
@@ -926,7 +1002,12 @@ function assertStringValue(
     result.diagnostics.push(
       util.diag(
         ConfigurationDiagnosticMessage.ASP_304_Invalid_Configuration_Option_Type,
-        [name, configLocation, Object.prototype.toString.call(val).slice(8, -1), "String"],
+        [
+          name,
+          configLocation,
+          Object.prototype.toString.call(val).slice(8, -1),
+          "String",
+        ],
       ),
     );
   }
@@ -943,7 +1024,12 @@ function assertBooleanValue(
     result.diagnostics.push(
       util.diag(
         ConfigurationDiagnosticMessage.ASP_304_Invalid_Configuration_Option_Type,
-        [name, configLocation, Object.prototype.toString.call(val).slice(8, -1), "true | false"],
+        [
+          name,
+          configLocation,
+          Object.prototype.toString.call(val).slice(8, -1),
+          "true | false",
+        ],
       ),
     );
   }
@@ -960,7 +1046,12 @@ function assertFunctionValue(
     result.diagnostics.push(
       util.diag(
         ConfigurationDiagnosticMessage.ASP_304_Invalid_Configuration_Option_Type,
-        [name, configLocation, Object.prototype.toString.call(val).slice(8, -1), "function"],
+        [
+          name,
+          configLocation,
+          Object.prototype.toString.call(val).slice(8, -1),
+          "function",
+        ],
       ),
     );
   }
@@ -977,7 +1068,12 @@ function assertObjectValue(
     result.diagnostics.push(
       util.diag(
         ConfigurationDiagnosticMessage.ASP_304_Invalid_Configuration_Option_Type,
-        [name, configLocation, Object.prototype.toString.call(val).slice(8, -1), "object"],
+        [
+          name,
+          configLocation,
+          Object.prototype.toString.call(val).slice(8, -1),
+          "object",
+        ],
       ),
     );
   }
@@ -997,7 +1093,12 @@ function assertArrayOfNumbersValue(
     result.diagnostics.push(
       util.diag(
         ConfigurationDiagnosticMessage.ASP_304_Invalid_Configuration_Option_Type,
-        [configLocation, name, Object.prototype.toString.call(val).slice(8, -1), "Array"],
+        [
+          configLocation,
+          name,
+          Object.prototype.toString.call(val).slice(8, -1),
+          "Array",
+        ],
       ),
     );
   }
@@ -1014,7 +1115,12 @@ function assertNumberValue(
     result.diagnostics.push(
       util.diag(
         ConfigurationDiagnosticMessage.ASP_304_Invalid_Configuration_Option_Type,
-        [name, configLocation, Object.prototype.toString.call(val).slice(8, -1), "number"],
+        [
+          name,
+          configLocation,
+          Object.prototype.toString.call(val).slice(8, -1),
+          "number",
+        ],
       ),
     );
   }
@@ -1031,20 +1137,29 @@ function assertRegExpValue(
     result.diagnostics.push(
       util.diag(
         ConfigurationDiagnosticMessage.ASP_304_Invalid_Configuration_Option_Type,
-        [name, configLocation, Object.prototype.toString.call(val).slice(8, -1), "RegExp"],
+        [
+          name,
+          configLocation,
+          Object.prototype.toString.call(val).slice(8, -1),
+          "RegExp",
+        ],
       ),
     );
   }
 }
 
-function resolveUnsetOptionsFromConfigModule(configModule: any, result: util.ConfigurationState) {
+function resolveUnsetOptionsFromConfigModule(
+  configModule: any,
+  result: util.ConfigurationState,
+) {
   if (configModule.options) {
     for (const entry of Object.entries(configModule.options)) {
       const [providedOptionName, providedOptionValue] = entry;
       const option = result.optionsByName.get(providedOptionName);
       if (!option) continue;
       const value = result.values.get(option);
-      if (!value) throw new Error("Invalid state: value does not exist for option.");
+      if (!value)
+        throw new Error("Invalid state: value does not exist for option.");
       if (value.providedBy === util.ConfigurationOptionProvidedBy.Unprovided) {
         value.providedBy = util.ConfigurationOptionProvidedBy.Config;
         value.value = providedOptionValue;
@@ -1052,4 +1167,3 @@ function resolveUnsetOptionsFromConfigModule(configModule: any, result: util.Con
     }
   }
 }
-

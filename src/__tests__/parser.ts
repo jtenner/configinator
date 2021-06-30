@@ -1,6 +1,6 @@
 import { parse, Configuration, UserDefinedEnvironment } from "../index";
 const fs = require("fs");
-const path = require('path');
+const path = require("path");
 
 const globalEnv = {
   cwd: process.cwd(),
@@ -29,18 +29,24 @@ describe("parser", () => {
   });
 
   test("options must match names", () => {
-    const result = parse([], {
-      "test": {
-        name: "not-test",
-        type: "b",
+    const result = parse(
+      [],
+      {
+        test: {
+          name: "not-test",
+          type: "b",
+        },
+        config: {
+          name: "config",
+          type: "R",
+          defaultValue: {},
+        },
       },
-      config: {
-        name: "config",
-        type: "R",
-        defaultValue: {},
-      },
-    }, globalEnv);
-    expect(filter(result, ["diagnostics"])).toMatchSnapshot("option names must match");
+      globalEnv,
+    );
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot(
+      "option names must match",
+    );
   });
 
   test("simple arguments", () => {
@@ -52,7 +58,7 @@ describe("parser", () => {
         defaultValue: {},
         description: "Provide a configuration",
         optional: true,
-      }
+      },
     };
     const result = parse(["arg1"], config, globalEnv);
     expect(result).toMatchSnapshot("simple argument");
@@ -88,11 +94,13 @@ describe("parser", () => {
       bad: {
         name: "bad",
         // @ts-ignore: this is on purpose
-        type: "z"
+        type: "z",
       },
     };
     const result = parse([], config, globalEnv);
-    expect(filter(result, ["diagnostics"])).toMatchSnapshot("bad option flag type");
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot(
+      "bad option flag type",
+    );
   });
 
   test("bad config flag type", () => {
@@ -105,7 +113,9 @@ describe("parser", () => {
       },
     };
     const result = parse([], config, globalEnv);
-    expect(filter(result, ["diagnostics"])).toMatchSnapshot("bad config flag type");
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot(
+      "bad config flag type",
+    );
   });
 
   test("array of strings default value", () => {
@@ -123,7 +133,9 @@ describe("parser", () => {
       },
     };
     const result = parse([], config, globalEnv);
-    expect(filter(result, ["diagnostics"])).toMatchSnapshot("validate array of strings");
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot(
+      "validate array of strings",
+    );
   });
 
   test("array of numbers default value", () => {
@@ -141,7 +153,9 @@ describe("parser", () => {
       },
     };
     const result = parse([], config, globalEnv);
-    expect(filter(result, ["diagnostics"])).toMatchSnapshot("validate array of numbers");
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot(
+      "validate array of numbers",
+    );
   });
 
   test("number type flag", () => {
@@ -159,7 +173,9 @@ describe("parser", () => {
       },
     };
     const result = parse([], config, globalEnv);
-    expect(filter(result, ["diagnostics"])).toMatchSnapshot("validate number flag");
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot(
+      "validate number flag",
+    );
   });
 
   test("number type flag", () => {
@@ -177,7 +193,9 @@ describe("parser", () => {
       },
     };
     const result = parse([], config, globalEnv);
-    expect(filter(result, ["diagnostics"])).toMatchSnapshot("validate string flag");
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot(
+      "validate string flag",
+    );
   });
 
   test("executable type flag", () => {
@@ -195,7 +213,9 @@ describe("parser", () => {
       },
     };
     const result = parse([], config, globalEnv);
-    expect(filter(result, ["diagnostics"])).toMatchSnapshot("validate executable flag");
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot(
+      "validate executable flag",
+    );
   });
 
   test("when regex option default is not regex", () => {
@@ -213,7 +233,9 @@ describe("parser", () => {
       },
     };
     const result = parse([], config, globalEnv);
-    expect(filter(result, ["diagnostics"])).toMatchSnapshot("regex default value error");
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot(
+      "regex default value error",
+    );
   });
 
   test("array of numbers default value when default value is an array, but also incorrect", () => {
@@ -231,7 +253,9 @@ describe("parser", () => {
       },
     };
     const result = parse([], config, globalEnv);
-    expect(filter(result, ["diagnostics"])).toMatchSnapshot("array of numbers wrong type");
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot(
+      "array of numbers wrong type",
+    );
   });
 
   test("array of string default value when default value is an array, but also incorrect", () => {
@@ -249,7 +273,9 @@ describe("parser", () => {
       },
     };
     const result = parse([], config, globalEnv);
-    expect(filter(result, ["diagnostics"])).toMatchSnapshot("array of strings wrong type");
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot(
+      "array of strings wrong type",
+    );
   });
 
   test("invalid boolean value", () => {
@@ -267,7 +293,9 @@ describe("parser", () => {
       },
     };
     const result = parse([], config, globalEnv);
-    expect(filter(result, ["diagnostics"])).toMatchSnapshot("invalid boolean default value");
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot(
+      "invalid boolean default value",
+    );
   });
 
   test("rest args", () => {
@@ -277,7 +305,11 @@ describe("parser", () => {
         type: "R",
       },
     };
-    const result = parse(["--", "rest!", "one", "two", "three"], config, globalEnv);
+    const result = parse(
+      ["--", "rest!", "one", "two", "three"],
+      config,
+      globalEnv,
+    );
     expect(filter(result, ["rest"])).toMatchSnapshot("rest args");
   });
 
@@ -294,7 +326,9 @@ describe("parser", () => {
       },
     };
     const result = parse(["-t"], config, globalEnv);
-    expect(filter(result, ["diagnostics"])).toMatchSnapshot("not passing an argument to a flag that requires another argument");
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot(
+      "not passing an argument to a flag that requires another argument",
+    );
   });
 
   test("already provided flags", () => {
@@ -310,7 +344,9 @@ describe("parser", () => {
       },
     };
     const result = parse(["-t", "blah", "-t", "meh"], config, globalEnv);
-    expect(filter(result, ["diagnostics"])).toMatchSnapshot("already provided flag");
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot(
+      "already provided flag",
+    );
   });
 
   test("parsing true and false strings", () => {
@@ -328,11 +364,14 @@ describe("parser", () => {
         type: "b",
       },
     };
-    const result = parse([
-      "--test1", "true",
-      "--test2", "false",
-    ], config, globalEnv);
-    expect(filter(result, ["values", "diagnostics"])).toMatchSnapshot("parsing true and false strings with boolean flags");
+    const result = parse(
+      ["--test1", "true", "--test2", "false"],
+      config,
+      globalEnv,
+    );
+    expect(filter(result, ["values", "diagnostics"])).toMatchSnapshot(
+      "parsing true and false strings with boolean flags",
+    );
   });
 
   test("parsing string array argument missing", () => {
@@ -344,12 +383,12 @@ describe("parser", () => {
       test: {
         name: "test",
         type: "S",
-      }
+      },
     };
-    const result = parse([
-      "--test",
-    ], config, globalEnv);
-    expect(filter(result, ["diagnostics"])).toMatchSnapshot("array parameter with argument missing");
+    const result = parse(["--test"], config, globalEnv);
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot(
+      "array parameter with argument missing",
+    );
   });
 
   test("parsing string array argument missing, next is a flag", () => {
@@ -365,12 +404,12 @@ describe("parser", () => {
       b: {
         name: "b",
         type: "b",
-      }
+      },
     };
-    const result = parse([
-      "--test", "--b"
-    ], config, globalEnv);
-    expect(filter(result, ["diagnostics"])).toMatchSnapshot("array parameter with argument missing, next is a flag");
+    const result = parse(["--test", "--b"], config, globalEnv);
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot(
+      "array parameter with argument missing, next is a flag",
+    );
   });
 
   test("parsing string array error", () => {
@@ -382,12 +421,12 @@ describe("parser", () => {
       test: {
         name: "test",
         type: "S",
-      }
+      },
     };
-    const result = parse([
-      "--test", "--"
-    ], config, globalEnv);
-    expect(filter(result, ["diagnostics"])).toMatchSnapshot("string array arguemnts invalid");
+    const result = parse(["--test", "--"], config, globalEnv);
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot(
+      "string array arguemnts invalid",
+    );
   });
 
   test("parsing string array success", () => {
@@ -399,12 +438,12 @@ describe("parser", () => {
       test: {
         name: "test",
         type: "S",
-      }
+      },
     };
-    const result = parse([
-      "--test", "one,two,three"
-    ], config, globalEnv);
-    expect(filter(result, ["diagnostics"])).toMatchSnapshot("string array success");
+    const result = parse(["--test", "one,two,three"], config, globalEnv);
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot(
+      "string array success",
+    );
   });
 
   test("string parameters", () => {
@@ -416,12 +455,12 @@ describe("parser", () => {
       test: {
         name: "test",
         type: "s",
-      }
+      },
     };
-    const result = parse([
-      "--test", "this should work"
-    ], config, globalEnv);
-    expect(filter(result, ["diagnostics", "values"])).toMatchSnapshot("string arguments");
+    const result = parse(["--test", "this should work"], config, globalEnv);
+    expect(filter(result, ["diagnostics", "values"])).toMatchSnapshot(
+      "string arguments",
+    );
   });
 
   test("string parameters fail", () => {
@@ -433,11 +472,11 @@ describe("parser", () => {
       test: {
         name: "test",
         type: "s",
-      }
+      },
     };
-    const result = parse([
-      "--test", "--"
-    ], config, globalEnv);
-    expect(filter(result, ["diagnostics"])).toMatchSnapshot("string arguments fail");
+    const result = parse(["--test", "--"], config, globalEnv);
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot(
+      "string arguments fail",
+    );
   });
 });

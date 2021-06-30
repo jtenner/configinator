@@ -13,5 +13,5 @@ export enum ConfigurationDiagnosticMessage {
   ASP_301_Invalid_Configuration_Shape_Type_Expected = "Invalid Configuration at '{0}': Property '{1}' must be '{2}', received '{3}'",
   ASP_302_Invalid_Configuration_Property_Type_Expected = "Invalid Configuration Option at '{0}': Property '{1}' must be '{2}', received '{3}'",
   ASP_303_Invalid_Configuration_Unexpected_Option = "Invalid Configuration Option at '{0}': Property '{1}' is invalid",
-  ASP_304_Invalid_Configuration_Option_Type = "Invalid Configuration Option at '{0}': Property '{1}' has an invalid type '{2}', expected '{3}'"
+  ASP_304_Invalid_Configuration_Option_Type = "Invalid Configuration Option at '{0}': Property '{1}' has an invalid type '{2}', expected '{3}'",
 }
