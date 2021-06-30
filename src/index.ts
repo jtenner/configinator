@@ -531,16 +531,6 @@ function tokenizeInput(
           });
           break;
         }
-
-        default: {
-          config.diagnostics.push(
-            util.diag(
-              ConfigurationDiagnosticMessage.ASP_103_Invalid_Configuration_Option_Bad_Option_Flag_Type,
-              [option.name, option.type],
-            ),
-          );
-          break;
-        }
       }
     } else {
       result.push({

@@ -1,4 +1,5 @@
 import { parse, Configuration, UserDefinedEnvironment } from "../index";
+import { ConfigurationOptionType } from "../util";
 const fs = require("fs");
 const path = require("path");
 
