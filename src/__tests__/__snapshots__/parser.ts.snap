@@ -130,36 +130,17 @@ Object {
 }
 `;
 
-exports[`parser obtaining file values: file contents 1`] = `"a"`;
+exports[`parser obtaining file values: config - module 1`] = `
+Object {
+  "options": Object {},
+}
+`;
+
+exports[`parser obtaining file values: file - file 1`] = `"a"`;
 
 exports[`parser obtaining file values: file value 1`] = `
 Object {
   "diagnostics": Array [],
-  "values": Map {
-    Object {
-      "defaultValue": "src/__test_files__/default.config.js",
-      "name": "config",
-      "type": "R",
-    } => Object {
-      "providedBy": 0,
-      "value": Object {
-        "basedir": "C:\\\\Users\\\\Joshua Tenner\\\\projects\\\\configinator",
-        "filename": "src/__test_files__/default.config.js",
-        "getModule": [Function],
-      },
-    },
-    Object {
-      "name": "file",
-      "type": "f",
-    } => Object {
-      "providedBy": 2,
-      "value": Object {
-        "basedir": "C:\\\\Users\\\\Joshua Tenner\\\\projects\\\\configinator",
-        "filename": "src/__test_files__/a.txt",
-        "getContents": [Function],
-      },
-    },
-  },
 }
 `;
 
