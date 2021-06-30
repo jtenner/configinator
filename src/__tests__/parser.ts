@@ -731,4 +731,22 @@ describe("parser", () => {
     expect(filter(result, ["diagnostics"])).toMatchSnapshot("F flag default values");
     snapshotValues(result);
   });
+
+  test("f flag default value", () => {
+    const config: Configuration = {
+      config: {
+        name: "config",
+        type: "R",
+        defaultValue: "src/__test_files__/default.config.js"
+      },
+      file: {
+        name: "file",
+        type: "f",
+        defaultValue: "src/__test_files__/a.txt",
+      },
+    };
+    const result = parse([], config, globalEnv);
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot("f flag default values");
+    snapshotValues(result);
+  });
 });

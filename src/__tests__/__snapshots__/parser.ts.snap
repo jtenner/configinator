@@ -103,6 +103,20 @@ Object {
 }
 `;
 
+exports[`parser f flag default value: config - module 1`] = `
+Object {
+  "options": Object {},
+}
+`;
+
+exports[`parser f flag default value: f flag default values 1`] = `
+Object {
+  "diagnostics": Array [],
+}
+`;
+
+exports[`parser f flag default value: file - file 1`] = `"a"`;
+
 exports[`parser flag that requires another argument in the wrong position: not passing an argument to a flag that requires another argument 1`] = `
 Object {
   "diagnostics": Array [
