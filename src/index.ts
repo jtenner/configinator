@@ -100,7 +100,14 @@ export function parse(
     }
   }
 
+  resolveDefaultUnprovidedValues(result, env);
   return result;
+}
+
+function resolveDefaultUnprovidedValues(result: util.ConfigurationState, env: UserDefinedEnvironment): void {
+  for (const name of result.optionsByName.keys()) {
+    resolveDefaultOptionValue(result, env, name);
+  }
 }
 
 function requiredOption(
@@ -687,7 +694,13 @@ function requireDefaultValue(
   value.value = {
     filename: requirePath,
     basedir: env.cwd,
-    getModule: () => require(path.join(env.cwd, requirePath)),
+    getModule: () => {
+      try {
+        return require(path.join(env.cwd, requirePath));
+      } catch(ex) {
+        return null;
+      }
+    },
   } as util.ConfigurationRequire;
 }
 
@@ -769,6 +782,7 @@ function resolveDefaultOptionValue(
     value.providedBy === util.ConfigurationOptionProvidedBy.Unprovided &&
     option.defaultValue !== void 0
   ) {
+    value.providedBy = util.ConfigurationOptionProvidedBy.Default;
     switch (option.type) {
       case "F": {
         fileArrayValue(option.defaultValue, env, value);

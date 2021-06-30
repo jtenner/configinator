@@ -1,5 +1,4 @@
 import { parse, Configuration, UserDefinedEnvironment, ConfigurationState } from "../index";
-import { ConfigurationOptionType } from "../util";
 const fs = require("fs");
 const path = require("path");
 
@@ -19,7 +18,7 @@ function snapshotValues(result: ConfigurationState): void {
         continue;
       }
       case "R": {
-        expect(value.value?.getModule()).toMatchSnapshot(`${option.name} - module`);
+        expect(value.value ? value.value.getModule() : null).toMatchSnapshot(`${option.name} - module`);
         continue;
       }
       case "G":
@@ -712,6 +711,24 @@ describe("parser", () => {
       "--config", "src/__test_files__/default2.config.js",
     ], config, globalEnv);
     expect(filter(result, ["diagnostics"])).toMatchSnapshot("R diagnostics");
+    snapshotValues(result);
+  });
+
+  test("F flag default value", () => {
+    const config: Configuration = {
+      config: {
+        name: "config",
+        type: "R",
+        defaultValue: "src/__test_files__/default.config.js"
+      },
+      files: {
+        name: "files",
+        type: "F",
+        defaultValue: ["src/__test_files__/a.txt", "src/__test_files__/b.txt"],
+      },
+    };
+    const result = parse([], config, globalEnv);
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot("F flag default values");
     snapshotValues(result);
   });
 });

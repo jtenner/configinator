@@ -101,6 +101,7 @@ export enum ConfigurationOptionProvidedBy {
   Unprovided,
   Config,
   Argv,
+  Default,
 }
 
 export type ConfigurationOptionValue = {
