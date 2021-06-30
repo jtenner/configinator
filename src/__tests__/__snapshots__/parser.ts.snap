@@ -297,6 +297,14 @@ Object {
 }
 `;
 
+exports[`parser unknown flags passed via argv: unknown flag 1`] = `
+Object {
+  "diagnostics": Array [
+    "Invalid CLI argument 'unknown': Option is not valid",
+  ],
+}
+`;
+
 exports[`parser when regex option default is not regex: regex default value error 1`] = `
 Object {
   "diagnostics": Array [

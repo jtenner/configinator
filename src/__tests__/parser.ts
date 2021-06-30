@@ -499,4 +499,15 @@ describe("parser", () => {
     const result = parse(["--e", "--o"], config, globalEnv);
     expect(filter(result, ["diagnostics"])).toMatchSnapshot("o and e flags");
   });
+
+  test("unknown flags passed via argv", () => {
+    const config: Configuration = {
+      config: {
+        name: "config",
+        type: "R",
+      }
+    };
+    const result = parse(["--unknown"], config, globalEnv);
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot("unknown flag");
+  });
 });
