@@ -638,15 +638,6 @@ function resolveCliProvidedOptions(
         );
         continue;
       }
-      case util.ConfigurationArgvTokenType.InvalidFlag: {
-        result.diagnostics.push(
-          util.diag(
-            ConfigurationDiagnosticMessage.ASP_201_Invalid_CLI_Argument_Invalid_Flag,
-            [cliToken.value as string],
-          ),
-        );
-        continue;
-      }
       case util.ConfigurationArgvTokenType.Rest: {
         result.rest.push(cliToken.value as string);
         continue;
@@ -660,7 +651,9 @@ function resolveCliProvidedOptions(
         );
         continue;
       }
+      /* istanbul ignore next */
       default:
+        /* istanbul ignore next */
         throw new Error(
           "Invalid CLI Token type. An internal error has occured.",
         );

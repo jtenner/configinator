@@ -165,7 +165,6 @@ export enum ConfigurationArgvTokenType {
   Rest,
   UnknownFlag,
   AlreadyProvided,
-  InvalidFlag,
   ArgumentMissing,
   Unprovided,
   CannotBePassed,
