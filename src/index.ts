@@ -726,8 +726,7 @@ function globArrayValue(
     files.push(...globResult);
   }
   const result: util.ConfigurationFile[] = [];
-  for (const entry of new Set<string>(files)) {
-    const [filename] = entry;
+  for (const filename of new Set<string>(files)) {
     result.push({
       basedir: env.cwd,
       getContents: () => env.readFileSync(filename, env.cwd),

@@ -166,9 +166,9 @@ Object {
 }
 `;
 
-exports[`parser obtaining files via glob array: file - glob 0 1`] = `null`;
+exports[`parser obtaining files via glob array: file - glob 0 1`] = `"a"`;
 
-exports[`parser obtaining files via glob array: file - glob 1 1`] = `null`;
+exports[`parser obtaining files via glob array: file - glob 1 1`] = `"b"`;
 
 exports[`parser obtaining files via glob array: glob values 1`] = `
 Object {
