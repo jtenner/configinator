@@ -701,5 +701,17 @@ describe("parser", () => {
     snapshotValues(result);
   });
 
-
+  test("obtaining a config that doesn't exist should return null", () => {
+    const config: Configuration = {
+      config: {
+        name: "config",
+        type: "R"
+      },
+    };
+    const result = parse([
+      "--config", "src/__test_files__/default2.config.js",
+    ], config, globalEnv);
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot("R diagnostics");
+    snapshotValues(result);
+  });
 });

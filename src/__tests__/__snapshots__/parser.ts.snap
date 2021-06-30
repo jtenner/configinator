@@ -130,6 +130,14 @@ Object {
 }
 `;
 
+exports[`parser obtaining a config that doesn't exist should return null: R diagnostics 1`] = `
+Object {
+  "diagnostics": Array [],
+}
+`;
+
+exports[`parser obtaining a config that doesn't exist should return null: config - module 1`] = `null`;
+
 exports[`parser obtaining file array values: config - module 1`] = `
 Object {
   "options": Object {},
