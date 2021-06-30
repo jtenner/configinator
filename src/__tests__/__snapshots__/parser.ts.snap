@@ -192,6 +192,20 @@ Object {
 }
 `;
 
+exports[`parser obtaining number via n flag: config - module 1`] = `
+Object {
+  "options": Object {},
+}
+`;
+
+exports[`parser obtaining number via n flag: num 1`] = `1`;
+
+exports[`parser obtaining number via n flag: num diagnostics 1`] = `
+Object {
+  "diagnostics": Array [],
+}
+`;
+
 exports[`parser obtaining numbers via N flag: config - module 1`] = `
 Object {
   "options": Object {},

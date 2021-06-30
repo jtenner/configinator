@@ -642,4 +642,23 @@ describe("parser", () => {
     expect(filter(result, ["diagnostics"])).toMatchSnapshot("num diagnostics");
     snapshotValues(result);
   });
+
+  test("obtaining number via n flag", () => {
+    const config: Configuration = {
+      config: {
+        name: "config",
+        type: "R",
+        defaultValue: "src/__test_files__/default.config.js",
+      },
+      num: {
+        name: "num",
+        type: "n",
+      },
+    };
+    const result = parse([
+      "--num", "1",
+    ], config, globalEnv);
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot("num diagnostics");
+    snapshotValues(result);
+  });
 });
