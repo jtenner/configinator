@@ -365,6 +365,20 @@ Object {
 
 exports[`parser obtaining regex via r flag: val 1`] = `/\\.\\*/`;
 
+exports[`parser options is not an object: config - module 1`] = `
+Object {
+  "options": 42,
+}
+`;
+
+exports[`parser options is not an object: config options number 1`] = `
+Object {
+  "diagnostics": Array [
+    "Invalid Configuration at 'src/__test_files__/config.options_number.js': Property 'options' must be 'Object', received 'Number'",
+  ],
+}
+`;
+
 exports[`parser options must match names: option names must match 1`] = `
 Object {
   "diagnostics": Array [

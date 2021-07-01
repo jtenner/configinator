@@ -841,6 +841,7 @@ function validateConfigModuleShape(
           ],
         ),
       );
+      return;
     }
   }
 
@@ -853,7 +854,7 @@ function validateConfigModuleShape(
             relativeConfigurationPath,
             "options",
             "Object",
-            Object.prototype.toString.call(configModule.extends).slice(8, -1),
+            Object.prototype.toString.call(configModule.options).slice(8, -1),
           ],
         ),
       );
