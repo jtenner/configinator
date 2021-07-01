@@ -313,6 +313,32 @@ Object {
 }
 `;
 
+exports[`parser object option: config - module 1`] = `
+Object {
+  "options": Object {
+    "test": Object {
+      "a": "A",
+      "b": "B",
+      "c": "C",
+    },
+  },
+}
+`;
+
+exports[`parser object option: test 1`] = `
+Object {
+  "a": "A",
+  "b": "B",
+  "c": "C",
+}
+`;
+
+exports[`parser object option: test objects 1`] = `
+Object {
+  "diagnostics": Array [],
+}
+`;
+
 exports[`parser obtaining a config that doesn't exist should return null: R diagnostics 1`] = `
 Object {
   "diagnostics": Array [],

@@ -936,4 +936,21 @@ describe("parser", () => {
     expect(filter(result, ["diagnostics"])).toMatchSnapshot("test functions");
     snapshotValues(result);
   });
+
+  test("object option", () => {
+    const config: Configuration = {
+      config: {
+        name: "config",
+        type: "R",
+        defaultValue: "src/__test_files__/config.object.js"
+      },
+      test: {
+        name: "test",
+        type: "o",
+      }
+    };
+    const result = parse([], config, globalEnv);
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot("test objects");
+    snapshotValues(result);
+  });
 });
