@@ -866,7 +866,6 @@ function validateConfigModuleOptionValues(
   configLocation: string,
   result: util.ConfigurationState,
 ) {
-  if (!configModule) return;
   if (!configModule.options) return;
   for (const providedOptionEntry of Object.entries(configModule.options)) {
     const [providedOptionName, providedOptionValue] = providedOptionEntry;
