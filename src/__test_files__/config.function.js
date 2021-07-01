@@ -1,5 +1,5 @@
 module.exports = {
   options: {
-    test() {}
+    test() {},
   },
 };

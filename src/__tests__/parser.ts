@@ -1,4 +1,9 @@
-import { parse, Configuration, UserDefinedEnvironment, ConfigurationState } from "../index";
+import {
+  parse,
+  Configuration,
+  UserDefinedEnvironment,
+  ConfigurationState,
+} from "../index";
 const fs = require("fs");
 const path = require("path");
 
@@ -9,23 +14,31 @@ function snapshotValues(result: ConfigurationState): void {
       case "F": {
         let i = 0;
         for (const file of value.value) {
-          expect(file.getContents()).toMatchSnapshot(`${option.name} - file ${i++}`);
+          expect(file.getContents()).toMatchSnapshot(
+            `${option.name} - file ${i++}`,
+          );
         }
         continue;
       }
       case "f": {
-        expect(value.value.getContents()).toMatchSnapshot(`${option.name} - file`);
+        expect(value.value.getContents()).toMatchSnapshot(
+          `${option.name} - file`,
+        );
         continue;
       }
       case "R": {
-        expect(value.value ? value.value.getModule() : null).toMatchSnapshot(`${option.name} - module`);
+        expect(value.value ? value.value.getModule() : null).toMatchSnapshot(
+          `${option.name} - module`,
+        );
         continue;
       }
       case "G":
       case "g": {
         let i = 0;
         for (const file of value.value) {
-          expect(file.getContents()).toMatchSnapshot(`${option.name} - glob ${i++}`);
+          expect(file.getContents()).toMatchSnapshot(
+            `${option.name} - glob ${i++}`,
+          );
         }
         continue;
       }
@@ -96,7 +109,9 @@ describe("parser", () => {
     };
 
     const result = parse(["arg1"], config, globalEnv);
-    expect(filter(result, ["args", "diagnostics"])).toMatchSnapshot("simple argument");
+    expect(filter(result, ["args", "diagnostics"])).toMatchSnapshot(
+      "simple argument",
+    );
   });
 
   test("duplicate aliases", () => {
@@ -540,7 +555,7 @@ describe("parser", () => {
       config: {
         name: "config",
         type: "R",
-      }
+      },
     };
     const result = parse(["--unknown"], config, globalEnv);
     expect(filter(result, ["diagnostics"])).toMatchSnapshot("unknown flag");
@@ -558,9 +573,11 @@ describe("parser", () => {
         type: "f",
       },
     };
-    const result = parse([
-      "--file", "src/__test_files__/a.txt",
-    ], config, globalEnv);
+    const result = parse(
+      ["--file", "src/__test_files__/a.txt"],
+      config,
+      globalEnv,
+    );
     expect(filter(result, ["diagnostics"])).toMatchSnapshot("file value");
     snapshotValues(result);
   });
@@ -577,9 +594,11 @@ describe("parser", () => {
         type: "F",
       },
     };
-    const result = parse([
-      "--file", "src/__test_files__/a.txt,src/__test_files__/b.txt",
-    ], config, globalEnv);
+    const result = parse(
+      ["--file", "src/__test_files__/a.txt,src/__test_files__/b.txt"],
+      config,
+      globalEnv,
+    );
     expect(filter(result, ["diagnostics"])).toMatchSnapshot("file values");
     snapshotValues(result);
   });
@@ -596,9 +615,11 @@ describe("parser", () => {
         type: "g",
       },
     };
-    const result = parse([
-      "--file", "src/__test_files__/*.txt",
-    ], config, globalEnv);
+    const result = parse(
+      ["--file", "src/__test_files__/*.txt"],
+      config,
+      globalEnv,
+    );
     expect(filter(result, ["diagnostics"])).toMatchSnapshot("glob values");
     snapshotValues(result);
   });
@@ -615,9 +636,11 @@ describe("parser", () => {
         type: "G",
       },
     };
-    const result = parse([
-      "--file", "src/__test_files__/a.txt,src/__test_files__/b.txt",
-    ], config, globalEnv);
+    const result = parse(
+      ["--file", "src/__test_files__/a.txt,src/__test_files__/b.txt"],
+      config,
+      globalEnv,
+    );
     expect(filter(result, ["diagnostics"])).toMatchSnapshot("glob values");
     snapshotValues(result);
   });
@@ -634,9 +657,7 @@ describe("parser", () => {
         type: "N",
       },
     };
-    const result = parse([
-      "--nums", "1,2,3",
-    ], config, globalEnv);
+    const result = parse(["--nums", "1,2,3"], config, globalEnv);
     expect(filter(result, ["diagnostics"])).toMatchSnapshot("num diagnostics");
     snapshotValues(result);
   });
@@ -653,9 +674,7 @@ describe("parser", () => {
         type: "n",
       },
     };
-    const result = parse([
-      "--num", "1",
-    ], config, globalEnv);
+    const result = parse(["--num", "1"], config, globalEnv);
     expect(filter(result, ["diagnostics"])).toMatchSnapshot("num diagnostics");
     snapshotValues(result);
   });
@@ -673,9 +692,11 @@ describe("parser", () => {
         defaultValue: -1,
       },
     };
-    const result = parse([
-      "--config", "src/__test_files__/example.js",
-    ], config, globalEnv);
+    const result = parse(
+      ["--config", "src/__test_files__/example.js"],
+      config,
+      globalEnv,
+    );
     expect(filter(result, ["diagnostics"])).toMatchSnapshot("R diagnostics");
     snapshotValues(result);
   });
@@ -692,9 +713,7 @@ describe("parser", () => {
         type: "r",
       },
     };
-    const result = parse([
-      "--val", ".*",
-    ], config, globalEnv);
+    const result = parse(["--val", ".*"], config, globalEnv);
     expect(filter(result, ["diagnostics"])).toMatchSnapshot("R diagnostics");
     snapshotValues(result);
   });
@@ -703,12 +722,14 @@ describe("parser", () => {
     const config: Configuration = {
       config: {
         name: "config",
-        type: "R"
+        type: "R",
       },
     };
-    const result = parse([
-      "--config", "src/__test_files__/default2.config.js",
-    ], config, globalEnv);
+    const result = parse(
+      ["--config", "src/__test_files__/default2.config.js"],
+      config,
+      globalEnv,
+    );
     expect(filter(result, ["diagnostics"])).toMatchSnapshot("R diagnostics");
     snapshotValues(result);
   });
@@ -718,7 +739,7 @@ describe("parser", () => {
       config: {
         name: "config",
         type: "R",
-        defaultValue: "src/__test_files__/default.config.js"
+        defaultValue: "src/__test_files__/default.config.js",
       },
       files: {
         name: "files",
@@ -727,7 +748,9 @@ describe("parser", () => {
       },
     };
     const result = parse([], config, globalEnv);
-    expect(filter(result, ["diagnostics"])).toMatchSnapshot("F flag default values");
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot(
+      "F flag default values",
+    );
     snapshotValues(result);
   });
 
@@ -736,7 +759,7 @@ describe("parser", () => {
       config: {
         name: "config",
         type: "R",
-        defaultValue: "src/__test_files__/default.config.js"
+        defaultValue: "src/__test_files__/default.config.js",
       },
       file: {
         name: "file",
@@ -745,7 +768,9 @@ describe("parser", () => {
       },
     };
     const result = parse([], config, globalEnv);
-    expect(filter(result, ["diagnostics"])).toMatchSnapshot("f flag default values");
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot(
+      "f flag default values",
+    );
     snapshotValues(result);
   });
 
@@ -754,7 +779,7 @@ describe("parser", () => {
       config: {
         name: "config",
         type: "R",
-        defaultValue: "src/__test_files__/default.config.js"
+        defaultValue: "src/__test_files__/default.config.js",
       },
       file: {
         name: "file",
@@ -763,7 +788,9 @@ describe("parser", () => {
       },
     };
     const result = parse([], config, globalEnv);
-    expect(filter(result, ["diagnostics"])).toMatchSnapshot("f flag default values");
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot(
+      "f flag default values",
+    );
     snapshotValues(result);
   });
 
@@ -772,7 +799,7 @@ describe("parser", () => {
       config: {
         name: "config",
         type: "R",
-        defaultValue: "src/__test_files__/default.config.js"
+        defaultValue: "src/__test_files__/default.config.js",
       },
       file: {
         name: "file",
@@ -781,7 +808,9 @@ describe("parser", () => {
       },
     };
     const result = parse([], config, globalEnv);
-    expect(filter(result, ["diagnostics"])).toMatchSnapshot("G flag default values");
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot(
+      "G flag default values",
+    );
     snapshotValues(result);
   });
 
@@ -790,7 +819,7 @@ describe("parser", () => {
       config: {
         name: "config",
         type: "R",
-        defaultValue: "src/__test_files__/default.config.js"
+        defaultValue: "src/__test_files__/default.config.js",
       },
       num: {
         name: "num",
@@ -799,7 +828,9 @@ describe("parser", () => {
       },
     };
     const result = parse([], config, globalEnv);
-    expect(filter(result, ["diagnostics"])).toMatchSnapshot("n flag default values");
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot(
+      "n flag default values",
+    );
     snapshotValues(result);
   });
 
@@ -808,11 +839,13 @@ describe("parser", () => {
       config: {
         name: "config",
         type: "R",
-        defaultValue: "src/__test_files__/config.not_an_object.js"
+        defaultValue: "src/__test_files__/config.not_an_object.js",
       },
     };
     const result = parse([], config, globalEnv);
-    expect(filter(result, ["diagnostics"])).toMatchSnapshot("config is not an object");
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot(
+      "config is not an object",
+    );
     snapshotValues(result);
   });
 
@@ -821,11 +854,13 @@ describe("parser", () => {
       config: {
         name: "config",
         type: "R",
-        defaultValue: "src/__test_files__/config.extends_number.js"
+        defaultValue: "src/__test_files__/config.extends_number.js",
       },
     };
     const result = parse([], config, globalEnv);
-    expect(filter(result, ["diagnostics"])).toMatchSnapshot("config extends number");
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot(
+      "config extends number",
+    );
     snapshotValues(result);
   });
 
@@ -834,11 +869,13 @@ describe("parser", () => {
       config: {
         name: "config",
         type: "R",
-        defaultValue: "src/__test_files__/config.options_number.js"
+        defaultValue: "src/__test_files__/config.options_number.js",
       },
     };
     const result = parse([], config, globalEnv);
-    expect(filter(result, ["diagnostics"])).toMatchSnapshot("config options number");
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot(
+      "config options number",
+    );
     snapshotValues(result);
   });
 
@@ -847,7 +884,7 @@ describe("parser", () => {
       config: {
         name: "config",
         type: "R",
-        defaultValue: "src/__test_files__/config.null.js"
+        defaultValue: "src/__test_files__/config.null.js",
       },
     };
     const result = parse([], config, globalEnv);
@@ -860,11 +897,13 @@ describe("parser", () => {
       config: {
         name: "config",
         type: "R",
-        defaultValue: "src/__test_files__/config.invalid_option.js"
+        defaultValue: "src/__test_files__/config.invalid_option.js",
       },
     };
     const result = parse([], config, globalEnv);
-    expect(filter(result, ["diagnostics"])).toMatchSnapshot("invalid option config");
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot(
+      "invalid option config",
+    );
     snapshotValues(result);
   });
 
@@ -873,15 +912,17 @@ describe("parser", () => {
       config: {
         name: "config",
         type: "R",
-        defaultValue: "src/__test_files__/config.array_of_strings.js"
+        defaultValue: "src/__test_files__/config.array_of_strings.js",
       },
       test: {
         name: "test",
         type: "S",
-      }
+      },
     };
     const result = parse([], config, globalEnv);
-    expect(filter(result, ["diagnostics"])).toMatchSnapshot("test array of strings");
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot(
+      "test array of strings",
+    );
     snapshotValues(result);
   });
 
@@ -890,12 +931,12 @@ describe("parser", () => {
       config: {
         name: "config",
         type: "R",
-        defaultValue: "src/__test_files__/config.string.js"
+        defaultValue: "src/__test_files__/config.string.js",
       },
       test: {
         name: "test",
         type: "s",
-      }
+      },
     };
     const result = parse([], config, globalEnv);
     expect(filter(result, ["diagnostics"])).toMatchSnapshot("test strings");
@@ -907,12 +948,12 @@ describe("parser", () => {
       config: {
         name: "config",
         type: "R",
-        defaultValue: "src/__test_files__/config.boolean.js"
+        defaultValue: "src/__test_files__/config.boolean.js",
       },
       test: {
         name: "test",
         type: "b",
-      }
+      },
     };
     const result = parse([], config, globalEnv);
     expect(filter(result, ["diagnostics"])).toMatchSnapshot("test booleans");
@@ -924,12 +965,12 @@ describe("parser", () => {
       config: {
         name: "config",
         type: "R",
-        defaultValue: "src/__test_files__/config.function.js"
+        defaultValue: "src/__test_files__/config.function.js",
       },
       test: {
         name: "test",
         type: "e",
-      }
+      },
     };
     const result = parse([], config, globalEnv);
     expect(filter(result, ["diagnostics"])).toMatchSnapshot("test functions");
@@ -941,12 +982,12 @@ describe("parser", () => {
       config: {
         name: "config",
         type: "R",
-        defaultValue: "src/__test_files__/config.object.js"
+        defaultValue: "src/__test_files__/config.object.js",
       },
       test: {
         name: "test",
         type: "o",
-      }
+      },
     };
     const result = parse([], config, globalEnv);
     expect(filter(result, ["diagnostics"])).toMatchSnapshot("test objects");
@@ -958,15 +999,17 @@ describe("parser", () => {
       config: {
         name: "config",
         type: "R",
-        defaultValue: "src/__test_files__/config.number_array.js"
+        defaultValue: "src/__test_files__/config.number_array.js",
       },
       test: {
         name: "test",
         type: "N",
-      }
+      },
     };
     const result = parse([], config, globalEnv);
-    expect(filter(result, ["diagnostics"])).toMatchSnapshot("test array of numbers");
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot(
+      "test array of numbers",
+    );
     snapshotValues(result);
   });
 
@@ -975,12 +1018,12 @@ describe("parser", () => {
       config: {
         name: "config",
         type: "R",
-        defaultValue: "src/__test_files__/config.regex.js"
+        defaultValue: "src/__test_files__/config.regex.js",
       },
       test: {
         name: "test",
         type: "r",
-      }
+      },
     };
     const result = parse([], config, globalEnv);
     expect(filter(result, ["diagnostics"])).toMatchSnapshot("test regex");
@@ -992,16 +1035,18 @@ describe("parser", () => {
       config: {
         name: "config",
         type: "R",
-        defaultValue: "src/__test_files__/default.config.js"
+        defaultValue: "src/__test_files__/default.config.js",
       },
       test: {
         name: "test",
         type: "r",
-        defaultValue: /.*/
+        defaultValue: /.*/,
       },
     };
     const result = parse([], config, globalEnv);
-    expect(filter(result, ["diagnostics"])).toMatchSnapshot("test regex default value");
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot(
+      "test regex default value",
+    );
     snapshotValues(result);
   });
 
@@ -1010,17 +1055,19 @@ describe("parser", () => {
       config: {
         name: "config",
         type: "R",
-        defaultValue: "src/__test_files__/default.config.js"
+        defaultValue: "src/__test_files__/default.config.js",
       },
       test: {
         name: "test",
         type: "e",
         /* istanbul ignore next */
-        defaultValue: () => void 0
+        defaultValue: () => void 0,
       },
     };
     const result = parse([], config, globalEnv);
-    expect(filter(result, ["diagnostics"])).toMatchSnapshot("test function default value");
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot(
+      "test function default value",
+    );
     snapshotValues(result);
   });
 
@@ -1029,11 +1076,13 @@ describe("parser", () => {
       config: {
         name: "config",
         type: "R",
-        defaultValue: "src/__test_files__/default.config.js"
-      }
+        defaultValue: "src/__test_files__/default.config.js",
+      },
     };
     const result = parse(["-t"], config, globalEnv);
-    expect(filter(result, ["diagnostics"])).toMatchSnapshot("invalid alias argument");
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot(
+      "invalid alias argument",
+    );
   });
 
   test("invalid array of strings config option", () => {
@@ -1042,7 +1091,7 @@ describe("parser", () => {
         name: "config",
         type: "R",
         // boolean test value, when it should be an array of strings
-        defaultValue: "src/__test_files__/config.boolean.js"
+        defaultValue: "src/__test_files__/config.boolean.js",
       },
       test: {
         name: "test",
@@ -1050,7 +1099,9 @@ describe("parser", () => {
       },
     };
     const result = parse([], config, globalEnv);
-    expect(filter(result, ["diagnostics"])).toMatchSnapshot("invalid array of strings config value");
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot(
+      "invalid array of strings config value",
+    );
   });
 
   test("invalid string config option", () => {
@@ -1059,7 +1110,7 @@ describe("parser", () => {
         name: "config",
         type: "R",
         // boolean test value, when it should be an array of strings
-        defaultValue: "src/__test_files__/config.boolean.js"
+        defaultValue: "src/__test_files__/config.boolean.js",
       },
       test: {
         name: "test",
@@ -1067,7 +1118,9 @@ describe("parser", () => {
       },
     };
     const result = parse([], config, globalEnv);
-    expect(filter(result, ["diagnostics"])).toMatchSnapshot("invalid string value");
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot(
+      "invalid string value",
+    );
   });
 
   test("invalid boolean config option", () => {
@@ -1075,7 +1128,7 @@ describe("parser", () => {
       config: {
         name: "config",
         type: "R",
-        defaultValue: "src/__test_files__/config.string.js"
+        defaultValue: "src/__test_files__/config.string.js",
       },
       test: {
         name: "test",
@@ -1083,7 +1136,9 @@ describe("parser", () => {
       },
     };
     const result = parse([], config, globalEnv);
-    expect(filter(result, ["diagnostics"])).toMatchSnapshot("invalid boolean value");
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot(
+      "invalid boolean value",
+    );
   });
 
   test("invalid function config option", () => {
@@ -1092,7 +1147,7 @@ describe("parser", () => {
         name: "config",
         type: "R",
         // string test value, but expected function
-        defaultValue: "src/__test_files__/config.string.js"
+        defaultValue: "src/__test_files__/config.string.js",
       },
       test: {
         name: "test",
@@ -1100,7 +1155,9 @@ describe("parser", () => {
       },
     };
     const result = parse([], config, globalEnv);
-    expect(filter(result, ["diagnostics"])).toMatchSnapshot("invalid function value");
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot(
+      "invalid function value",
+    );
   });
 
   test("invalid object config option", () => {
@@ -1109,7 +1166,7 @@ describe("parser", () => {
         name: "config",
         type: "R",
         // string test value, but expected object
-        defaultValue: "src/__test_files__/config.string.js"
+        defaultValue: "src/__test_files__/config.string.js",
       },
       test: {
         name: "test",
@@ -1117,7 +1174,9 @@ describe("parser", () => {
       },
     };
     const result = parse([], config, globalEnv);
-    expect(filter(result, ["diagnostics"])).toMatchSnapshot("invalid object value");
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot(
+      "invalid object value",
+    );
   });
 
   test("invalid number array config option", () => {
@@ -1126,7 +1185,7 @@ describe("parser", () => {
         name: "config",
         type: "R",
         // string test value, but expected number array
-        defaultValue: "src/__test_files__/config.string.js"
+        defaultValue: "src/__test_files__/config.string.js",
       },
       test: {
         name: "test",
@@ -1134,7 +1193,9 @@ describe("parser", () => {
       },
     };
     const result = parse([], config, globalEnv);
-    expect(filter(result, ["diagnostics"])).toMatchSnapshot("invalid number array value");
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot(
+      "invalid number array value",
+    );
   });
 
   test("invalid number config option", () => {
@@ -1143,7 +1204,7 @@ describe("parser", () => {
         name: "config",
         type: "R",
         // string test value, but expected number
-        defaultValue: "src/__test_files__/config.string.js"
+        defaultValue: "src/__test_files__/config.string.js",
       },
       test: {
         name: "test",
@@ -1151,7 +1212,9 @@ describe("parser", () => {
       },
     };
     const result = parse([], config, globalEnv);
-    expect(filter(result, ["diagnostics"])).toMatchSnapshot("invalid number value");
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot(
+      "invalid number value",
+    );
   });
 
   test("invalid regex config option", () => {
@@ -1160,7 +1223,7 @@ describe("parser", () => {
         name: "config",
         type: "R",
         // string test value, but expected number
-        defaultValue: "src/__test_files__/config.string.js"
+        defaultValue: "src/__test_files__/config.string.js",
       },
       test: {
         name: "test",
@@ -1168,7 +1231,9 @@ describe("parser", () => {
       },
     };
     const result = parse([], config, globalEnv);
-    expect(filter(result, ["diagnostics"])).toMatchSnapshot("invalid regex value");
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot(
+      "invalid regex value",
+    );
   });
 
   test("config with extension", () => {
@@ -1176,7 +1241,7 @@ describe("parser", () => {
       config: {
         name: "config",
         type: "R",
-        defaultValue: "src/__test_files__/config.extends.js"
+        defaultValue: "src/__test_files__/config.extends.js",
       },
     };
     const result = parse([], config, globalEnv);
@@ -1188,12 +1253,16 @@ describe("parser", () => {
       config: {
         name: "config",
         type: "R",
-        defaultValue: "src/__test_files__/config.extends_not_found.js"
+        defaultValue: "src/__test_files__/config.extends_not_found.js",
       },
     };
     const result = parse([], config, globalEnv);
     expect(result.diagnostics).toHaveLength(1);
-    expect(result.diagnostics[0].startsWith("Invalid Configuration at 'src/__test_files__/some_unknown_config.js': Cannot find module")).toBeTruthy();
+    expect(
+      result.diagnostics[0].startsWith(
+        "Invalid Configuration at 'src/__test_files__/some_unknown_config.js': Cannot find module",
+      ),
+    ).toBeTruthy();
   });
 
   test("config that extends invalid config", () => {
@@ -1201,7 +1270,7 @@ describe("parser", () => {
       config: {
         name: "config",
         type: "R",
-        defaultValue: "src/__test_files__/config.extends_invalid_option.js"
+        defaultValue: "src/__test_files__/config.extends_invalid_option.js",
       },
     };
     const result = parse([], config, globalEnv);

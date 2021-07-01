@@ -57,6 +57,8 @@ If `configinator` accepts a configuration that is malformed it will report diagn
 - if a duplicate alias for a given option is found
 - if the `"name"` property for a given option does not match
 - if the `"config"` property is not set correctly
+- if the flag types are not configured correctly
+- if default values are not the right type
 
 If the end user passes invalid cli flags, argv is malformed, or if the configuration object is invalid, then it will report diagnostics for each of these obvious problems.
 
@@ -67,9 +69,11 @@ If the end user passes invalid cli flags, argv is malformed, or if the configura
 - badly shaped config files
 - configuration cannot be extended
 
+Also, anything after a `--` is concatenated to the `result.rest` string array.
+
 # configuration objects
 
-A cofiguration object has two properties. An `options` property and a `extends` property.
+A configuration object has two properties. An `options` property and a `extends` property.
 
 ```ts
 module.exports = {
@@ -80,25 +84,32 @@ module.exports = {
 };
 ```
 
-If a configuration is malformed then a diagnostic will be emitted to describe the problem.
+If a configuration is malformed with bad options or it has the wrong shape, then a diagnostic will be emitted to describe the problem.
 
 # retrieving configuration values
 
-The process keeps track of a lot of meta data, and it's not intuitive how options should be retrieved.
+The process keeps track of a lot of meta-data and it's not intuitive how options should be retrieved. Retreive your options by using the following pattern.
 
 ```ts
-import { parse, ConfigurationOptionProvidedBy } from "configinator";
+import { ConfigurationOptionValue, ConfigurationResult } from "configinator";
 
-// after options are parsed and resolved
-const result = parse(argv, config, env);
-
-// First obtain the option metadata
-const myOption = result.optionsByName.get("option-name")!;
-// then obtain the value with the option
-const value = result.values.get(myOption)!;
+function getOptionByName(
+  result: ConfigurationResult,
+  name: string,
+): ConfigurationOptionValue {
+  if (!result.optionsByName.has(name))
+    throw new Error(`Cannot find option '${name}'`);
+  const option = result.optionsByName.get(name)!;
+  // the values map uses options as keys, not strings
+  return result.values.get(option)!;
+}
 
 // we can see how the option was provided, and it's value:
-console.log(`Option "option-name" is ${value.value} and was provided by ${ConfigurationOptionProvidedBy[value.providedBy]}`);
+console.log(
+  `Option "option-name" is ${value.value} and was provided by ${
+    ConfigurationOptionProvidedBy[value.providedBy]
+  }`,
+);
 ```
 
 # configuration types
@@ -120,7 +131,7 @@ const config = {
     decription: "A boolean flag",
     defaultValue: false, // recommended default value for booleans
   },
-}
+};
 ```
 
 It can be passed via CLI in the following ways:
@@ -177,7 +188,7 @@ const config: Configuration = {
     name: "single-file",
     type: "f", // single file
     // defaultValue: "someFilePath.txt",
-  }
+  },
 };
 ```
 
@@ -230,7 +241,7 @@ const config: Configuration = {
     name: "single-glob",
     type: "g", // single file
     // defaultValue: "*.txt",
-  }
+  },
 };
 ```
 
@@ -264,4 +275,3 @@ export type ConfigurationFile = {
 ```
 
 Calling the `getContents()` function will call the `env.readFileSync(file, baseDir)` function. This allows you to decide if you need the file contents, or just the file name and base directory.
-

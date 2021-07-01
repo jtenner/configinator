@@ -74,16 +74,21 @@ export function parse(
           configDir,
           configModule.extends,
         );
-        const relativeConfigLocation = path.relative(env.cwd, extendedConfigFileLocation);
+        const relativeConfigLocation = path.relative(
+          env.cwd,
+          extendedConfigFileLocation,
+        );
         const extendedConfigFileDir = path.dirname(extendedConfigFileLocation);
 
         try {
           configModule = require(extendedConfigFileLocation);
         } catch (ex) {
-          result.diagnostics.push(util.diag(
-            ConfigurationDiagnosticMessage.ASP_305_Invalid_Configuration_At,
-            [relativeConfigLocation, ex.message]
-          ));
+          result.diagnostics.push(
+            util.diag(
+              ConfigurationDiagnosticMessage.ASP_305_Invalid_Configuration_At,
+              [relativeConfigLocation, ex.message],
+            ),
+          );
           return result;
         }
 
@@ -114,7 +119,10 @@ export function parse(
   return result;
 }
 
-function resolveDefaultUnprovidedValues(result: util.ConfigurationState, env: UserDefinedEnvironment): void {
+function resolveDefaultUnprovidedValues(
+  result: util.ConfigurationState,
+  env: UserDefinedEnvironment,
+): void {
   for (const name of result.optionsByName.keys()) {
     resolveDefaultOptionValue(result, env, name);
   }
@@ -816,7 +824,10 @@ function validateConfigModuleShape(
   result: util.ConfigurationState,
   env: UserDefinedEnvironment,
 ) {
-  const relativeConfigurationPath = path.relative(env.cwd, absoluteConfigurationPath)
+  const relativeConfigurationPath = path.relative(
+    env.cwd,
+    absoluteConfigurationPath,
+  );
   if (typeof configModule !== "object") {
     result.diagnostics.push(
       util.diag(

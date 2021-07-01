@@ -1,5 +1,5 @@
 module.exports = {
   options: {
-    val: 42
+    val: 42,
   },
 };
