@@ -970,4 +970,21 @@ describe("parser", () => {
     expect(filter(result, ["diagnostics"])).toMatchSnapshot("test array of numbers");
     snapshotValues(result);
   });
+
+  test("regex option", () => {
+    const config: Configuration = {
+      config: {
+        name: "config",
+        type: "R",
+        defaultValue: "src/__test_files__/config.regex.js"
+      },
+      test: {
+        name: "test",
+        type: "r",
+      }
+    };
+    const result = parse([], config, globalEnv);
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot("test regex");
+    snapshotValues(result);
+  });
 });
