@@ -192,6 +192,12 @@ Object {
 }
 `;
 
+exports[`parser config with unprovided string argument: not provided 1`] = `
+Array [
+  "Invalid Provided Configuration: 'unprovided' is required",
+]
+`;
+
 exports[`parser duplicate aliases: duplicate alias 1`] = `
 Object {
   "diagnostics": Array [

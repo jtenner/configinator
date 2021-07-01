@@ -1276,4 +1276,22 @@ describe("parser", () => {
     const result = parse([], config, globalEnv);
     expect(result.diagnostics).toMatchSnapshot("invalid extended config");
   });
+
+  test("config with unprovided string argument", () => {
+    const config: Configuration = {
+      config: {
+        name: "config",
+        type: "R",
+        defaultValue: "src/__test_files__/default.config.js",
+      },
+      unprovided: {
+        name: "unprovided",
+        type: "s",
+        required: true,
+      },
+    };
+
+    const result = parse([], config, globalEnv);
+    expect(result.diagnostics).toMatchSnapshot("not provided");
+  });
 });

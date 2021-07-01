@@ -85,7 +85,7 @@ export function parse(
         } catch (ex) {
           result.diagnostics.push(
             util.diag(
-              ConfigurationDiagnosticMessage.ASP_305_Invalid_Configuration_At,
+              ConfigurationDiagnosticMessage.CFG_305_Invalid_Configuration_At,
               [relativeConfigLocation, ex.message],
             ),
           );
@@ -116,7 +116,20 @@ export function parse(
   }
 
   resolveDefaultUnprovidedValues(result, env);
+  ensureRequiredOptions(result);
   return result;
+}
+
+function ensureRequiredOptions(result: util.ConfigurationState): void {
+  for (const optionValue of result.values) {
+    const [option, value] = optionValue;
+    if (option.required && value.providedBy === util.ConfigurationOptionProvidedBy.Unprovided) {
+      result.diagnostics.push(util.diag(
+        ConfigurationDiagnosticMessage.CFG_400_Invalid_Provided_Configuration_Option_Is_Required,
+        [option.name],
+      ));
+    }
+  }
 }
 
 function resolveDefaultUnprovidedValues(
@@ -139,7 +152,7 @@ function requiredOption(
   if (!optionDefintion) {
     result.diagnostics.push(
       util.diag(
-        ConfigurationDiagnosticMessage.ASP_100_Invalid_Configuration_Option_Required,
+        ConfigurationDiagnosticMessage.CFG_100_Invalid_Configuration_Option_Required,
         [name],
       ),
     );
@@ -153,7 +166,7 @@ function validateDefintionNames(result: util.ConfigurationState): void {
     if (name !== configDefinition.name) {
       result.diagnostics.push(
         util.diag(
-          ConfigurationDiagnosticMessage.ASP_101_Invalid_Configuration_Option_Does_Not_Match,
+          ConfigurationDiagnosticMessage.CFG_101_Invalid_Configuration_Option_Does_Not_Match,
           [name, configDefinition.name],
         ),
       );
@@ -171,7 +184,7 @@ function validateAliases(result: util.ConfigurationState): void {
       if (aliasMap.has(alias)) {
         result.diagnostics.push(
           util.diag(
-            ConfigurationDiagnosticMessage.ASP_102_Invalid_Configuration_Option_Duplicate_Alias_Found,
+            ConfigurationDiagnosticMessage.CFG_102_Invalid_Configuration_Option_Duplicate_Alias_Found,
             [name, aliasMap.get(alias)!, alias],
           ),
         );
@@ -190,7 +203,7 @@ function validateConfigurationTypes(result: util.ConfigurationState): void {
     if (!flagSet.has(option.type)) {
       result.diagnostics.push(
         util.diag(
-          ConfigurationDiagnosticMessage.ASP_103_Invalid_Configuration_Option_Bad_Option_Flag_Type,
+          ConfigurationDiagnosticMessage.CFG_103_Invalid_Configuration_Option_Bad_Option_Flag_Type,
           [name, option.type],
         ),
       );
@@ -201,7 +214,7 @@ function validateConfigurationTypes(result: util.ConfigurationState): void {
   if (configOption && configOption.type !== "R") {
     result.diagnostics.push(
       util.diag(
-        ConfigurationDiagnosticMessage.ASP_104_Invalid_Configuration_Option_Unexpected_Option_Flag_Type,
+        ConfigurationDiagnosticMessage.CFG_104_Invalid_Configuration_Option_Unexpected_Option_Flag_Type,
         ["config", configOption.type, "R"],
       ),
     );
@@ -278,7 +291,7 @@ function assertArrayOfNumbersDefaultValue(
   } else {
     result.diagnostics.push(
       util.diag(
-        ConfigurationDiagnosticMessage.ASP_105_Invalid_Configuration_Default_Value_Is_Incorrect_Type,
+        ConfigurationDiagnosticMessage.CFG_105_Invalid_Configuration_Default_Value_Is_Incorrect_Type,
         [name, Object.prototype.toString.call(val).slice(8, -1), "Array"],
       ),
     );
@@ -297,7 +310,7 @@ function assertArrayOfStringsDefaultValue(
   } else {
     result.diagnostics.push(
       util.diag(
-        ConfigurationDiagnosticMessage.ASP_105_Invalid_Configuration_Default_Value_Is_Incorrect_Type,
+        ConfigurationDiagnosticMessage.CFG_105_Invalid_Configuration_Default_Value_Is_Incorrect_Type,
         [name, Object.prototype.toString.call(val).slice(8, -1), "Array"],
       ),
     );
@@ -313,7 +326,7 @@ function assertNumberDefaultValue(
   else {
     result.diagnostics.push(
       util.diag(
-        ConfigurationDiagnosticMessage.ASP_105_Invalid_Configuration_Default_Value_Is_Incorrect_Type,
+        ConfigurationDiagnosticMessage.CFG_105_Invalid_Configuration_Default_Value_Is_Incorrect_Type,
         [name, Object.prototype.toString.call(val).slice(8, -1), "Number"],
       ),
     );
@@ -329,7 +342,7 @@ function assertBooleanDefaultValue(
   else {
     result.diagnostics.push(
       util.diag(
-        ConfigurationDiagnosticMessage.ASP_105_Invalid_Configuration_Default_Value_Is_Incorrect_Type,
+        ConfigurationDiagnosticMessage.CFG_105_Invalid_Configuration_Default_Value_Is_Incorrect_Type,
         [name, Object.prototype.toString.call(val).slice(8, -1), "Boolean"],
       ),
     );
@@ -345,7 +358,7 @@ function assertRegExpDefaultValue(
   else {
     result.diagnostics.push(
       util.diag(
-        ConfigurationDiagnosticMessage.ASP_105_Invalid_Configuration_Default_Value_Is_Incorrect_Type,
+        ConfigurationDiagnosticMessage.CFG_105_Invalid_Configuration_Default_Value_Is_Incorrect_Type,
         [name, Object.prototype.toString.call(val).slice(8, -1), "RegExp"],
       ),
     );
@@ -361,7 +374,7 @@ function assertFunctionDefaultValue(
   else {
     result.diagnostics.push(
       util.diag(
-        ConfigurationDiagnosticMessage.ASP_105_Invalid_Configuration_Default_Value_Is_Incorrect_Type,
+        ConfigurationDiagnosticMessage.CFG_105_Invalid_Configuration_Default_Value_Is_Incorrect_Type,
         [name, Object.prototype.toString.call(val).slice(8, -1), "Function"],
       ),
     );
@@ -377,7 +390,7 @@ function assertStringDefaultValue(
   else {
     result.diagnostics.push(
       util.diag(
-        ConfigurationDiagnosticMessage.ASP_105_Invalid_Configuration_Default_Value_Is_Incorrect_Type,
+        ConfigurationDiagnosticMessage.CFG_105_Invalid_Configuration_Default_Value_Is_Incorrect_Type,
         [name, Object.prototype.toString.call(val).slice(8, -1), "String"],
       ),
     );
@@ -578,7 +591,7 @@ function resolveCliProvidedOptions(
       case util.ConfigurationArgvTokenType.CannotBePassed: {
         result.diagnostics.push(
           util.diag(
-            ConfigurationDiagnosticMessage.ASP_204_Invalid_CLI_Argument_Cannot_Be_Passed,
+            ConfigurationDiagnosticMessage.CFG_204_Invalid_CLI_Argument_Cannot_Be_Passed,
             [cliToken.option!.name, cliToken.option!.type],
           ),
         );
@@ -587,7 +600,7 @@ function resolveCliProvidedOptions(
       case util.ConfigurationArgvTokenType.Unprovided: {
         result.diagnostics.push(
           util.diag(
-            ConfigurationDiagnosticMessage.ASP_202_Invalid_CLI_Argument_Missing,
+            ConfigurationDiagnosticMessage.CFG_202_Invalid_CLI_Argument_Missing,
             [cliToken.option!.name],
           ),
         );
@@ -596,7 +609,7 @@ function resolveCliProvidedOptions(
       case util.ConfigurationArgvTokenType.AlreadyProvided: {
         result.diagnostics.push(
           util.diag(
-            ConfigurationDiagnosticMessage.ASP_200_Invalid_CLI_Argument_Argument_Already_Provided,
+            ConfigurationDiagnosticMessage.CFG_200_Invalid_CLI_Argument_Argument_Already_Provided,
             [cliToken.option!.name],
           ),
         );
@@ -657,7 +670,7 @@ function resolveCliProvidedOptions(
       case util.ConfigurationArgvTokenType.ArgumentMissing: {
         result.diagnostics.push(
           util.diag(
-            ConfigurationDiagnosticMessage.ASP_202_Invalid_CLI_Argument_Missing,
+            ConfigurationDiagnosticMessage.CFG_202_Invalid_CLI_Argument_Missing,
             [cliToken.option!.name],
           ),
         );
@@ -670,7 +683,7 @@ function resolveCliProvidedOptions(
       case util.ConfigurationArgvTokenType.UnknownFlag: {
         result.diagnostics.push(
           util.diag(
-            ConfigurationDiagnosticMessage.ASP_201_Invalid_CLI_Argument_Invalid_Flag,
+            ConfigurationDiagnosticMessage.CFG_201_Invalid_CLI_Argument_Invalid_Flag,
             [cliToken.value as string],
           ),
         );
@@ -831,7 +844,7 @@ function validateConfigModuleShape(
   if (typeof configModule !== "object") {
     result.diagnostics.push(
       util.diag(
-        ConfigurationDiagnosticMessage.ASP_300_Invalid_Configuration_Must_Be_An_Object,
+        ConfigurationDiagnosticMessage.CFG_300_Invalid_Configuration_Must_Be_An_Object,
         [relativeConfigurationPath],
       ),
     );
@@ -842,7 +855,7 @@ function validateConfigModuleShape(
     if (typeof configModule.extends !== "string") {
       result.diagnostics.push(
         util.diag(
-          ConfigurationDiagnosticMessage.ASP_301_Invalid_Configuration_Shape_Type_Expected,
+          ConfigurationDiagnosticMessage.CFG_301_Invalid_Configuration_Shape_Type_Expected,
           [
             relativeConfigurationPath,
             "extends",
@@ -859,7 +872,7 @@ function validateConfigModuleShape(
     if (typeof configModule.options !== "object") {
       result.diagnostics.push(
         util.diag(
-          ConfigurationDiagnosticMessage.ASP_301_Invalid_Configuration_Shape_Type_Expected,
+          ConfigurationDiagnosticMessage.CFG_301_Invalid_Configuration_Shape_Type_Expected,
           [
             relativeConfigurationPath,
             "options",
@@ -885,7 +898,7 @@ function validateConfigModuleOptionValues(
     if (!option) {
       result.diagnostics.push(
         util.diag(
-          ConfigurationDiagnosticMessage.ASP_303_Invalid_Configuration_Unexpected_Option,
+          ConfigurationDiagnosticMessage.CFG_303_Invalid_Configuration_Unexpected_Option,
           [relativeConfigLocation, providedOptionName],
         ),
       );
@@ -986,7 +999,7 @@ function assertArrayOfStringsValue(
   } else {
     result.diagnostics.push(
       util.diag(
-        ConfigurationDiagnosticMessage.ASP_304_Invalid_Configuration_Option_Type,
+        ConfigurationDiagnosticMessage.CFG_304_Invalid_Configuration_Option_Type,
         [
           configLocation,
           name,
@@ -1008,7 +1021,7 @@ function assertStringValue(
   else {
     result.diagnostics.push(
       util.diag(
-        ConfigurationDiagnosticMessage.ASP_304_Invalid_Configuration_Option_Type,
+        ConfigurationDiagnosticMessage.CFG_304_Invalid_Configuration_Option_Type,
         [
           configLocation,
           name,
@@ -1030,7 +1043,7 @@ function assertBooleanValue(
   else {
     result.diagnostics.push(
       util.diag(
-        ConfigurationDiagnosticMessage.ASP_304_Invalid_Configuration_Option_Type,
+        ConfigurationDiagnosticMessage.CFG_304_Invalid_Configuration_Option_Type,
         [
           configLocation,
           name,
@@ -1052,7 +1065,7 @@ function assertFunctionValue(
   else {
     result.diagnostics.push(
       util.diag(
-        ConfigurationDiagnosticMessage.ASP_304_Invalid_Configuration_Option_Type,
+        ConfigurationDiagnosticMessage.CFG_304_Invalid_Configuration_Option_Type,
         [
           configLocation,
           name,
@@ -1074,7 +1087,7 @@ function assertObjectValue(
   else {
     result.diagnostics.push(
       util.diag(
-        ConfigurationDiagnosticMessage.ASP_304_Invalid_Configuration_Option_Type,
+        ConfigurationDiagnosticMessage.CFG_304_Invalid_Configuration_Option_Type,
         [
           configLocation,
           name,
@@ -1099,7 +1112,7 @@ function assertArrayOfNumbersValue(
   } else {
     result.diagnostics.push(
       util.diag(
-        ConfigurationDiagnosticMessage.ASP_304_Invalid_Configuration_Option_Type,
+        ConfigurationDiagnosticMessage.CFG_304_Invalid_Configuration_Option_Type,
         [
           configLocation,
           name,
@@ -1121,7 +1134,7 @@ function assertNumberValue(
   else {
     result.diagnostics.push(
       util.diag(
-        ConfigurationDiagnosticMessage.ASP_304_Invalid_Configuration_Option_Type,
+        ConfigurationDiagnosticMessage.CFG_304_Invalid_Configuration_Option_Type,
         [
           configLocation,
           name,
@@ -1143,7 +1156,7 @@ function assertRegExpValue(
   else {
     result.diagnostics.push(
       util.diag(
-        ConfigurationDiagnosticMessage.ASP_304_Invalid_Configuration_Option_Type,
+        ConfigurationDiagnosticMessage.CFG_304_Invalid_Configuration_Option_Type,
         [
           configLocation,
           name,
