@@ -163,7 +163,7 @@ module.exports {
 
 This type of option represents files to be obtained from the file system. `"F"` is an array of files and `"f"` is a single file.
 
-Files are always relative to the working directory, or in the case of config files, they are relative to the configuration file's director.
+Files are always relative to the working directory, or in the case of config files, they are relative to the configuration file's directory.
 
 ```ts
 // this is how files are configured
@@ -192,10 +192,63 @@ When provided in a configuration file:
 ```ts
 module.exports = {
   options: {
-    // "s" flag
+    // "f" flag
     "single-file": "someFilePath.txt",
-    // "S" flag
+    // "F" flag
     files: ["one.txt", "two.txt", "three.txt"],
+  },
+};
+```
+
+When obtaining a value for these flags, it will look like this:
+
+```ts
+export type ConfigurationFile = {
+  basedir: string;
+  getContents(): string | null;
+  filename: string;
+};
+```
+
+Calling the `getContents()` function will call the `env.readFileSync(file, baseDir)` function. This allows you to decide if you need the file contents, or just the file name and base directory.
+
+## "G" and "g" flags
+
+This type of option represents files to be obtained from the file system that match the given patterns. `"G"` is an array of glob quieries and `"f"` is a single glob query.
+
+Files are always relative to the working directory, or in the case of config files, they are relative to the configuration file's directory.
+
+```ts
+// this is how globs are configured
+const config: Configuration = {
+  globs: {
+    name: "globs",
+    type: "G", // comma seperated list
+    // defaultValue: ["*.txt", "*.js", "*.ts"],
+  },
+  "single-glob": {
+    name: "single-glob",
+    type: "g", // single file
+    // defaultValue: "*.txt",
+  }
+};
+```
+
+When parsed via cli input:
+
+```
+node myCli.js --single-glob *.txt --globs *.js,*.ts,*.tsx
+```
+
+When provided in a configuration file:
+
+```ts
+module.exports = {
+  options: {
+    // "g" flag
+    "single-glob": "someFilePath.txt",
+    // "S" flag
+    globs: ["*.ts", "*.js", "*.tsx"],
   },
 };
 ```
