@@ -198,8 +198,8 @@ describe("parser", () => {
     const config: Configuration = {
       config: {
         name: "config",
-        type: "b",
-        defaultValue: true,
+        type: "R",
+        defaultValue: "src/__test_files__/default.config.js",
         alias: "c",
       },
       test: {
