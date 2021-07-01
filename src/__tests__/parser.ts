@@ -1137,4 +1137,21 @@ describe("parser", () => {
     const result = parse([], config, globalEnv);
     expect(filter(result, ["diagnostics"])).toMatchSnapshot("invalid number array value");
   });
+
+  test("invalid number config option", () => {
+    const config: Configuration = {
+      config: {
+        name: "config",
+        type: "R",
+        // string test value, but expected number
+        defaultValue: "src/__test_files__/config.string.js"
+      },
+      test: {
+        name: "test",
+        type: "n",
+      },
+    };
+    const result = parse([], config, globalEnv);
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot("invalid number value");
+  });
 });
