@@ -885,4 +885,21 @@ describe("parser", () => {
     expect(filter(result, ["diagnostics"])).toMatchSnapshot("test array of strings");
     snapshotValues(result);
   });
+
+  test("string option", () => {
+    const config: Configuration = {
+      config: {
+        name: "config",
+        type: "R",
+        defaultValue: "src/__test_files__/config.string.js"
+      },
+      test: {
+        name: "test",
+        type: "s",
+      }
+    };
+    const result = parse([], config, globalEnv);
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot("test strings");
+    snapshotValues(result);
+  });
 });

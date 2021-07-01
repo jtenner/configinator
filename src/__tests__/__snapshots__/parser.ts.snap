@@ -499,6 +499,22 @@ Object {
 }
 `;
 
+exports[`parser string option: config - module 1`] = `
+Object {
+  "options": Object {
+    "test": "a string",
+  },
+}
+`;
+
+exports[`parser string option: test 1`] = `"a string"`;
+
+exports[`parser string option: test strings 1`] = `
+Object {
+  "diagnostics": Array [],
+}
+`;
+
 exports[`parser string parameters fail: string arguments fail 1`] = `
 Object {
   "diagnostics": Array [
