@@ -1076,7 +1076,6 @@ describe("parser", () => {
       config: {
         name: "config",
         type: "R",
-        // boolean test value, when it should be an array of strings
         defaultValue: "src/__test_files__/config.string.js"
       },
       test: {
@@ -1086,5 +1085,22 @@ describe("parser", () => {
     };
     const result = parse([], config, globalEnv);
     expect(filter(result, ["diagnostics"])).toMatchSnapshot("invalid boolean value");
+  });
+
+  test("invalid function config option", () => {
+    const config: Configuration = {
+      config: {
+        name: "config",
+        type: "R",
+        // string test value, but expected function
+        defaultValue: "src/__test_files__/config.string.js"
+      },
+      test: {
+        name: "test",
+        type: "e",
+      },
+    };
+    const result = parse([], config, globalEnv);
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot("invalid function value");
   });
 });
