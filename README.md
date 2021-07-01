@@ -324,3 +324,35 @@ module.exports = {
   },
 };
 ```
+
+## "e" and "o" flags
+
+The `"e"` flag represents an executable function, wheras the `"o"` flag represents anything that returns `true` with the `typeof val === "object"` condition. This allows `null` values.
+
+```ts
+const config: Configuration = {
+  executable: {
+    name: "executable",
+    type: "e",
+    // defaultValue: () => {},
+  },
+  object: {
+    name: "object",
+    type: "o",
+    // defaultValue: {}
+  },
+};
+```
+
+These options cannot be passed via the command line, and will emit diagnostics at runtime if they are passed.
+
+Passing them via a config looks like this.
+
+```ts
+module.exports = {
+  options: {
+    executable: () => {},
+    object: {},
+  },
+};
+```
