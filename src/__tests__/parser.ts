@@ -1024,4 +1024,16 @@ describe("parser", () => {
     expect(filter(result, ["diagnostics"])).toMatchSnapshot("test function default value");
     snapshotValues(result);
   });
+
+  test("invalid alias", () => {
+    const config: Configuration = {
+      config: {
+        name: "config",
+        type: "R",
+        defaultValue: "src/__test_files__/default.config.js"
+      }
+    };
+    const result = parse(["-t"], config, globalEnv);
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot("invalid alias argument");
+  });
 });

@@ -280,6 +280,14 @@ exports[`parser g flag default value: file - glob 0 1`] = `"a"`;
 
 exports[`parser g flag default value: file - glob 1 1`] = `"b"`;
 
+exports[`parser invalid alias: invalid alias argument 1`] = `
+Object {
+  "diagnostics": Array [
+    "Invalid CLI argument 't': Option is not valid",
+  ],
+}
+`;
+
 exports[`parser invalid boolean value: invalid boolean default value 1`] = `
 Object {
   "diagnostics": Array [
