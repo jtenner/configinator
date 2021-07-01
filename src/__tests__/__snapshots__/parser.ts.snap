@@ -288,6 +288,14 @@ Object {
 }
 `;
 
+exports[`parser invalid array of strings config option: invalid array of strings config value 1`] = `
+Object {
+  "diagnostics": Array [
+    "Invalid Configuration Option at 'src/__test_files__/config.boolean.js': Property 'test' has an invalid type 'Boolean', expected 'Array'",
+  ],
+}
+`;
+
 exports[`parser invalid boolean value: invalid boolean default value 1`] = `
 Object {
   "diagnostics": Array [

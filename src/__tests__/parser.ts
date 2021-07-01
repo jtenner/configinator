@@ -1036,4 +1036,21 @@ describe("parser", () => {
     const result = parse(["-t"], config, globalEnv);
     expect(filter(result, ["diagnostics"])).toMatchSnapshot("invalid alias argument");
   });
+
+  test("invalid array of strings config option", () => {
+    const config: Configuration = {
+      config: {
+        name: "config",
+        type: "R",
+        // boolean test value, when it should be an array of strings
+        defaultValue: "src/__test_files__/config.boolean.js"
+      },
+      test: {
+        name: "test",
+        type: "S",
+      },
+    };
+    const result = parse([], config, globalEnv);
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot("invalid array of strings config value");
+  });
 });
