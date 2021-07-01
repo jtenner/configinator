@@ -1005,4 +1005,23 @@ describe("parser", () => {
     expect(filter(result, ["diagnostics"])).toMatchSnapshot("test regex default value");
     snapshotValues(result);
   });
+
+  test("function default value", () => {
+    const config: Configuration = {
+      config: {
+        name: "config",
+        type: "R",
+        defaultValue: "src/__test_files__/default.config.js"
+      },
+      test: {
+        name: "test",
+        type: "e",
+        /* istanbul ignore next */
+        defaultValue: () => void 0
+      },
+    };
+    const result = parse([], config, globalEnv);
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot("test function default value");
+    snapshotValues(result);
+  });
 });
