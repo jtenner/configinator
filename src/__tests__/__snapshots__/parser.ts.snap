@@ -296,6 +296,14 @@ Object {
 }
 `;
 
+exports[`parser invalid boolean config option: invalid boolean value 1`] = `
+Object {
+  "diagnostics": Array [
+    "Invalid Configuration Option at 'src/__test_files__/config.string.js': Property 'test' has an invalid type 'String', expected 'true | false'",
+  ],
+}
+`;
+
 exports[`parser invalid boolean value: invalid boolean default value 1`] = `
 Object {
   "diagnostics": Array [
@@ -323,7 +331,7 @@ Object {
 exports[`parser invalid string config option: invalid string value 1`] = `
 Object {
   "diagnostics": Array [
-    "Invalid Configuration Option at 'test': Property 'src/__test_files__/config.boolean.js' has an invalid type 'Boolean', expected 'String'",
+    "Invalid Configuration Option at 'src/__test_files__/config.boolean.js': Property 'test' has an invalid type 'Boolean', expected 'String'",
   ],
 }
 `;

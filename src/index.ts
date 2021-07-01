@@ -999,8 +999,8 @@ function assertStringValue(
       util.diag(
         ConfigurationDiagnosticMessage.ASP_304_Invalid_Configuration_Option_Type,
         [
-          name,
           configLocation,
+          name,
           Object.prototype.toString.call(val).slice(8, -1),
           "String",
         ],
@@ -1021,8 +1021,8 @@ function assertBooleanValue(
       util.diag(
         ConfigurationDiagnosticMessage.ASP_304_Invalid_Configuration_Option_Type,
         [
-          name,
           configLocation,
+          name,
           Object.prototype.toString.call(val).slice(8, -1),
           "true | false",
         ],
@@ -1043,8 +1043,8 @@ function assertFunctionValue(
       util.diag(
         ConfigurationDiagnosticMessage.ASP_304_Invalid_Configuration_Option_Type,
         [
-          name,
           configLocation,
+          name,
           Object.prototype.toString.call(val).slice(8, -1),
           "function",
         ],
@@ -1065,8 +1065,8 @@ function assertObjectValue(
       util.diag(
         ConfigurationDiagnosticMessage.ASP_304_Invalid_Configuration_Option_Type,
         [
-          name,
           configLocation,
+          name,
           Object.prototype.toString.call(val).slice(8, -1),
           "object",
         ],
@@ -1112,8 +1112,8 @@ function assertNumberValue(
       util.diag(
         ConfigurationDiagnosticMessage.ASP_304_Invalid_Configuration_Option_Type,
         [
-          name,
           configLocation,
+          name,
           Object.prototype.toString.call(val).slice(8, -1),
           "number",
         ],
@@ -1134,8 +1134,8 @@ function assertRegExpValue(
       util.diag(
         ConfigurationDiagnosticMessage.ASP_304_Invalid_Configuration_Option_Type,
         [
-          name,
           configLocation,
+          name,
           Object.prototype.toString.call(val).slice(8, -1),
           "RegExp",
         ],
