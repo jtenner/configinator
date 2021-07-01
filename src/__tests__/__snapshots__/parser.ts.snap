@@ -78,6 +78,32 @@ Object {
 }
 `;
 
+exports[`parser array of strings option: config - module 1`] = `
+Object {
+  "options": Object {
+    "test": Array [
+      "one",
+      "two",
+      "three",
+    ],
+  },
+}
+`;
+
+exports[`parser array of strings option: test 1`] = `
+Array [
+  "one",
+  "two",
+  "three",
+]
+`;
+
+exports[`parser array of strings option: test array of strings 1`] = `
+Object {
+  "diagnostics": Array [],
+}
+`;
+
 exports[`parser bad config flag type: bad config flag type 1`] = `
 Object {
   "diagnostics": Array [
