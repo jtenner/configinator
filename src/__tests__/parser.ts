@@ -1103,4 +1103,21 @@ describe("parser", () => {
     const result = parse([], config, globalEnv);
     expect(filter(result, ["diagnostics"])).toMatchSnapshot("invalid function value");
   });
+
+  test("invalid object config option", () => {
+    const config: Configuration = {
+      config: {
+        name: "config",
+        type: "R",
+        // string test value, but expected object
+        defaultValue: "src/__test_files__/config.string.js"
+      },
+      test: {
+        name: "test",
+        type: "o",
+      },
+    };
+    const result = parse([], config, globalEnv);
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot("invalid object value");
+  });
 });

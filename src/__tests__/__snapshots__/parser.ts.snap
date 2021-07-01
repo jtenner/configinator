@@ -336,6 +336,14 @@ Object {
 }
 `;
 
+exports[`parser invalid object config option: invalid object value 1`] = `
+Object {
+  "diagnostics": Array [
+    "Invalid Configuration Option at 'src/__test_files__/config.string.js': Property 'test' has an invalid type 'String', expected 'object'",
+  ],
+}
+`;
+
 exports[`parser invalid string config option: invalid string value 1`] = `
 Object {
   "diagnostics": Array [
