@@ -74,12 +74,17 @@ export function parse(
           configDir,
           configModule.extends,
         );
+        const relativeConfigLocation = path.relative(env.cwd, extendedConfigFileLocation);
         const extendedConfigFileDir = path.dirname(extendedConfigFileLocation);
 
         try {
           configModule = require(extendedConfigFileLocation);
-        } catch (_ex) {
-          break;
+        } catch (ex) {
+          result.diagnostics.push(util.diag(
+            ConfigurationDiagnosticMessage.ASP_305_Invalid_Configuration_At,
+            [relativeConfigLocation, ex.message]
+          ));
+          return result;
         }
 
         // validate shape and values
@@ -95,6 +100,7 @@ export function parse(
           result,
           env,
         );
+        // todo: add a configuration that extends a bad config
         if (result.diagnostics.length > 0) return result;
 
         // set the unset values and check for configuration extension
@@ -662,12 +668,6 @@ function resolveCliProvidedOptions(
         );
         continue;
       }
-      /* istanbul ignore next */
-      default:
-        /* istanbul ignore next */
-        throw new Error(
-          "Invalid CLI Token type. An internal error has occured.",
-        );
     }
   }
 }
@@ -1151,11 +1151,8 @@ function resolveUnsetOptionsFromConfigModule(
   if (configModule.options) {
     for (const entry of Object.entries(configModule.options)) {
       const [providedOptionName, providedOptionValue] = entry;
-      const option = result.optionsByName.get(providedOptionName);
-      if (!option) continue;
-      const value = result.values.get(option);
-      if (!value)
-        throw new Error("Invalid state: value does not exist for option.");
+      const option = result.optionsByName.get(providedOptionName)!;
+      const value = result.values.get(option)!;
       if (value.providedBy === util.ConfigurationOptionProvidedBy.Unprovided) {
         value.providedBy = util.ConfigurationOptionProvidedBy.Config;
         value.value = providedOptionValue;

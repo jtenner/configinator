@@ -180,6 +180,12 @@ Object {
 }
 `;
 
+exports[`parser config with extension: config extends 1`] = `
+Object {
+  "diagnostics": Array [],
+}
+`;
+
 exports[`parser duplicate aliases: duplicate alias 1`] = `
 Object {
   "diagnostics": Array [

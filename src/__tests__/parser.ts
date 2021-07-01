@@ -1171,4 +1171,29 @@ describe("parser", () => {
     const result = parse([], config, globalEnv);
     expect(filter(result, ["diagnostics"])).toMatchSnapshot("invalid regex value");
   });
+
+  test("config with extension", () => {
+    const config: Configuration = {
+      config: {
+        name: "config",
+        type: "R",
+        defaultValue: "src/__test_files__/config.extends.js"
+      },
+    };
+    const result = parse([], config, globalEnv);
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot("config extends");
+  });
+
+  test("config with invalid extension", () => {
+    const config: Configuration = {
+      config: {
+        name: "config",
+        type: "R",
+        defaultValue: "src/__test_files__/config.extends_not_found.js"
+      },
+    };
+    const result = parse([], config, globalEnv);
+    expect(result.diagnostics).toHaveLength(1);
+    expect(result.diagnostics[0].startsWith("Invalid Configuration at 'src/__test_files__/some_unknown_config.js': Cannot find module")).toBeTruthy();
+  });
 });
