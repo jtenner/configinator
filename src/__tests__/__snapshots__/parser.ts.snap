@@ -59,6 +59,32 @@ Object {
 }
 `;
 
+exports[`parser array of numbers option: config - module 1`] = `
+Object {
+  "options": Object {
+    "test": Array [
+      1,
+      2,
+      99,
+    ],
+  },
+}
+`;
+
+exports[`parser array of numbers option: test 1`] = `
+Array [
+  1,
+  2,
+  99,
+]
+`;
+
+exports[`parser array of numbers option: test array of numbers 1`] = `
+Object {
+  "diagnostics": Array [],
+}
+`;
+
 exports[`parser array of string default value when default value is an array, but also incorrect: array of strings wrong type 1`] = `
 Object {
   "diagnostics": Array [

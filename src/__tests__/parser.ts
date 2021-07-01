@@ -953,4 +953,21 @@ describe("parser", () => {
     expect(filter(result, ["diagnostics"])).toMatchSnapshot("test objects");
     snapshotValues(result);
   });
+
+  test("array of numbers option", () => {
+    const config: Configuration = {
+      config: {
+        name: "config",
+        type: "R",
+        defaultValue: "src/__test_files__/config.number_array.js"
+      },
+      test: {
+        name: "test",
+        type: "N",
+      }
+    };
+    const result = parse([], config, globalEnv);
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot("test array of numbers");
+    snapshotValues(result);
+  });
 });
