@@ -1196,4 +1196,16 @@ describe("parser", () => {
     expect(result.diagnostics).toHaveLength(1);
     expect(result.diagnostics[0].startsWith("Invalid Configuration at 'src/__test_files__/some_unknown_config.js': Cannot find module")).toBeTruthy();
   });
+
+  test("config that extends invalid config", () => {
+    const config: Configuration = {
+      config: {
+        name: "config",
+        type: "R",
+        defaultValue: "src/__test_files__/config.extends_invalid_option.js"
+      },
+    };
+    const result = parse([], config, globalEnv);
+    expect(result.diagnostics).toMatchSnapshot("invalid extended config");
+  });
 });

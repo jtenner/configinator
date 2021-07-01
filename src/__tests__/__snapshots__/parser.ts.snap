@@ -180,6 +180,12 @@ Object {
 }
 `;
 
+exports[`parser config that extends invalid config: invalid extended config 1`] = `
+Array [
+  "Invalid Configuration Option at 'src/__test_files__/config.invalid_option.js': Property 'invalidOption' is invalid",
+]
+`;
+
 exports[`parser config with extension: config extends 1`] = `
 Object {
   "diagnostics": Array [],
