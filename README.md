@@ -285,3 +285,42 @@ export type ConfigurationFile = {
 ```
 
 Calling the `getContents()` function will call the `env.readFileSync(file, baseDir)` function. This allows you to decide if you need the file contents, or just the file name and base directory.
+
+## "N" and "n" flags
+
+This type of option represents number values, or array of numbers. All numbers will be parsed as float values.
+
+```ts
+// this is how globs are configured
+const config: Configuration = {
+  numbers: {
+    name: "numbers",
+    type: "N", // comma seperated list
+    // defaultValue: [1, 2, 3],
+  },
+  "single-number": {
+    name: "single-number",
+    type: "n", // single file
+    // defaultValue: 5,
+  },
+};
+```
+
+When parsed via cli input:
+
+```
+node myCli.js --single-number 42 --globs 1,2,3
+```
+
+When provided in a configuration file:
+
+```ts
+module.exports = {
+  options: {
+    // "g" flag
+    "single-number": 42,
+    // "S" flag
+    numbers: [1, 2, 3],
+  },
+};
+```
