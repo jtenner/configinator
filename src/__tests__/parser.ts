@@ -816,4 +816,17 @@ describe("parser", () => {
     expect(filter(result, ["diagnostics"])).toMatchSnapshot("config is not an object");
     snapshotValues(result);
   });
+
+  test("extends is not a string", () => {
+    const config: Configuration = {
+      config: {
+        name: "config",
+        type: "R",
+        defaultValue: "src/__test_files__/config.extends_number.js"
+      },
+    };
+    const result = parse([], config, globalEnv);
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot("config extends number");
+    snapshotValues(result);
+  });
 });

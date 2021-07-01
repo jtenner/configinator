@@ -129,6 +129,21 @@ Object {
 }
 `;
 
+exports[`parser extends is not a string: config - module 1`] = `
+Object {
+  "extends": 42,
+  "options": Object {},
+}
+`;
+
+exports[`parser extends is not a string: config extends number 1`] = `
+Object {
+  "diagnostics": Array [
+    "Invalid Configuration at 'src/__test_files__/config.extends_number.js': Property 'extends' must be 'String', received 'Number'",
+  ],
+}
+`;
+
 exports[`parser f flag default value: config - module 1`] = `
 Object {
   "options": Object {},
