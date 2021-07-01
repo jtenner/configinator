@@ -204,6 +204,14 @@ Object {
 
 exports[`parser n flag default value: num 1`] = `50`;
 
+exports[`parser null configs: config - module 1`] = `null`;
+
+exports[`parser null configs: null config 1`] = `
+Object {
+  "diagnostics": Array [],
+}
+`;
+
 exports[`parser number type flag: validate number flag 1`] = `
 Object {
   "diagnostics": Array [

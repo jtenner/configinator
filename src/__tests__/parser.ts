@@ -842,4 +842,17 @@ describe("parser", () => {
     expect(filter(result, ["diagnostics"])).toMatchSnapshot("config options number");
     snapshotValues(result);
   });
+
+  test("null configs", () => {
+    const config: Configuration = {
+      config: {
+        name: "config",
+        type: "R",
+        defaultValue: "src/__test_files__/config.null.js"
+      },
+    };
+    const result = parse([], config, globalEnv);
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot("null config");
+    snapshotValues(result);
+  });
 });
