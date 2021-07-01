@@ -774,10 +774,7 @@ function resolveDefaultOptionValue(
   name: string,
 ): util.ConfigurationOptionValue {
   const option = result.optionsByName.get(name)!;
-  const value = result.values.get(option) || {
-    providedBy: util.ConfigurationOptionProvidedBy.Unprovided,
-    value: option.defaultValue,
-  };
+  const value = result.values.get(option)!;
   if (
     value.providedBy === util.ConfigurationOptionProvidedBy.Unprovided &&
     option.defaultValue !== void 0
