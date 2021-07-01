@@ -48,9 +48,7 @@ const configState = parse(proces.argv.slice(2), myConfig, {
 
 # features
 
-This package has the following features:
-
-## configuration validation
+This argv parser has the following features:
 
 If `configinator` accepts a configuration that is malformed it will report diagnostic errors.
 
@@ -65,9 +63,12 @@ If the end user passes invalid cli flags, argv is malformed, or if the configura
 - invalid option flag values
 - option is missing
 - executable or object flags cannot be provided via the cli
+
+If a configuration file is specified, then it will traverse the file tree and validate options inside that configuration. The following diagnostics are also emitted for configuration files.
+
 - bad option types in config files
 - badly shaped config files
-- configuration cannot be extended
+- configuration cannot be extended (because it doesn't exist)
 
 Also, anything after a `--` is concatenated to the `result.rest` string array.
 
@@ -91,7 +92,11 @@ If a configuration is malformed with bad options or it has the wrong shape, then
 The process keeps track of a lot of meta-data and it's not intuitive how options should be retrieved. Retreive your options by using the following pattern.
 
 ```ts
-import { ConfigurationOptionValue, ConfigurationResult } from "configinator";
+import {
+  parse,
+  ConfigurationOptionValue,
+  ConfigurationResult,
+} from "configinator";
 
 function getOptionByName(
   result: ConfigurationResult,
@@ -103,6 +108,11 @@ function getOptionByName(
   // the values map uses options as keys, not strings
   return result.values.get(option)!;
 }
+
+const result = parse(process.argv.slice(2), myConfig, myEnv);
+
+// use the helper function
+const value = getOptionByName(result, "option-name");
 
 // we can see how the option was provided, and it's value:
 console.log(
