@@ -225,7 +225,7 @@ Calling the `getContents()` function will call the `env.readFileSync(file, baseD
 
 ## "G" and "g" flags
 
-This type of option represents files to be obtained from the file system that match the given patterns. `"G"` is an array of glob quieries and `"f"` is a single glob query.
+This type of option represents files to be obtained from the file system that match the given patterns. `"G"` is an array of glob quieries and `"g"` is a single glob query.
 
 Files are always relative to the working directory, or in the case of config files, they are relative to the configuration file's directory.
 
