@@ -87,7 +87,6 @@ export type ConfigurationOptionDefinition = {
   name: string;
   alias?: ConfigurationOptionAlias;
   type: ConfigurationOptionType;
-  optional?: boolean;
   description?: string | string[];
   defaultValue?: any;
   required?: boolean;

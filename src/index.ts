@@ -686,7 +686,7 @@ function requireValue(
   value: util.ConfigurationOptionValue,
 ) {
   value.value = {
-    filename: "",
+    filename: requirePath,
     basedir: env.cwd,
     getModule: getModule(requirePath, env.cwd),
   } as util.ConfigurationRequire;

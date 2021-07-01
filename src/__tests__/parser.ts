@@ -92,7 +92,6 @@ describe("parser", () => {
         alias: "c",
         defaultValue: "src/__test_files__/default.config.js",
         description: "Provide a configuration",
-        optional: true,
       },
     };
 
