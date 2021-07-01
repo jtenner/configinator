@@ -1120,4 +1120,21 @@ describe("parser", () => {
     const result = parse([], config, globalEnv);
     expect(filter(result, ["diagnostics"])).toMatchSnapshot("invalid object value");
   });
+
+  test("invalid number array config option", () => {
+    const config: Configuration = {
+      config: {
+        name: "config",
+        type: "R",
+        // string test value, but expected number array
+        defaultValue: "src/__test_files__/config.string.js"
+      },
+      test: {
+        name: "test",
+        type: "N",
+      },
+    };
+    const result = parse([], config, globalEnv);
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot("invalid number array value");
+  });
 });
