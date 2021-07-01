@@ -563,6 +563,20 @@ exports[`parser parsing true and false strings: test1 1`] = `"true"`;
 
 exports[`parser parsing true and false strings: test2 1`] = `"false"`;
 
+exports[`parser regex default value: config - module 1`] = `
+Object {
+  "options": Object {},
+}
+`;
+
+exports[`parser regex default value: test 1`] = `/\\.\\*/`;
+
+exports[`parser regex default value: test regex default value 1`] = `
+Object {
+  "diagnostics": Array [],
+}
+`;
+
 exports[`parser regex option: config - module 1`] = `
 Object {
   "options": Object {
