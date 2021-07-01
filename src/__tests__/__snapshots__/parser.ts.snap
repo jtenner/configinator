@@ -208,6 +208,22 @@ Object {
 }
 `;
 
+exports[`parser function option: config - module 1`] = `
+Object {
+  "options": Object {
+    "test": [Function],
+  },
+}
+`;
+
+exports[`parser function option: test 1`] = `[Function]`;
+
+exports[`parser function option: test functions 1`] = `
+Object {
+  "diagnostics": Array [],
+}
+`;
+
 exports[`parser g flag default value: config - module 1`] = `
 Object {
   "options": Object {},

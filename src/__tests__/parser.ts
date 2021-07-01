@@ -919,4 +919,21 @@ describe("parser", () => {
     expect(filter(result, ["diagnostics"])).toMatchSnapshot("test booleans");
     snapshotValues(result);
   });
+
+  test("function option", () => {
+    const config: Configuration = {
+      config: {
+        name: "config",
+        type: "R",
+        defaultValue: "src/__test_files__/config.function.js"
+      },
+      test: {
+        name: "test",
+        type: "e",
+      }
+    };
+    const result = parse([], config, globalEnv);
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot("test functions");
+    snapshotValues(result);
+  });
 });
