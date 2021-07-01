@@ -855,4 +855,17 @@ describe("parser", () => {
     expect(filter(result, ["diagnostics"])).toMatchSnapshot("null config");
     snapshotValues(result);
   });
+
+  test("invalid config option", () => {
+    const config: Configuration = {
+      config: {
+        name: "config",
+        type: "R",
+        defaultValue: "src/__test_files__/config.invalid_option.js"
+      },
+    };
+    const result = parse([], config, globalEnv);
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot("invalid option config");
+    snapshotValues(result);
+  });
 });

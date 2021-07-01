@@ -190,6 +190,22 @@ Object {
 }
 `;
 
+exports[`parser invalid config option: config - module 1`] = `
+Object {
+  "options": Object {
+    "invalidOption": 1,
+  },
+}
+`;
+
+exports[`parser invalid config option: invalid option config 1`] = `
+Object {
+  "diagnostics": Array [
+    "Invalid Configuration Option at 'src/__test_files__/config.invalid_option.js': Property 'invalidOption' is invalid",
+  ],
+}
+`;
+
 exports[`parser n flag default value: config - module 1`] = `
 Object {
   "options": Object {},

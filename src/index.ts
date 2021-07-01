@@ -57,6 +57,7 @@ export function parse(
         configModule,
         configModuleAbsoluteLocation,
         result,
+        env,
       );
       if (result.diagnostics.length > 0) return result;
 
@@ -92,6 +93,7 @@ export function parse(
           configModule,
           extendedConfigFileLocation,
           result,
+          env,
         );
         if (result.diagnostics.length > 0) return result;
 
@@ -865,8 +867,10 @@ function validateConfigModuleOptionValues(
   configModule: any,
   configLocation: string,
   result: util.ConfigurationState,
+  env: UserDefinedEnvironment,
 ) {
   if (!configModule.options) return;
+  const relativeConfigLocation = path.relative(env.cwd, configLocation);
   for (const providedOptionEntry of Object.entries(configModule.options)) {
     const [providedOptionName, providedOptionValue] = providedOptionEntry;
     const option = result.optionsByName.get(providedOptionName);
@@ -874,7 +878,7 @@ function validateConfigModuleOptionValues(
       result.diagnostics.push(
         util.diag(
           ConfigurationDiagnosticMessage.ASP_303_Invalid_Configuration_Unexpected_Option,
-          [configLocation, providedOptionName],
+          [relativeConfigLocation, providedOptionName],
         ),
       );
       continue;
@@ -886,7 +890,7 @@ function validateConfigModuleOptionValues(
       case "F": {
         assertArrayOfStringsValue(
           providedOptionValue,
-          configLocation,
+          relativeConfigLocation,
           providedOptionName,
           result,
         );
@@ -897,7 +901,7 @@ function validateConfigModuleOptionValues(
       case "f": {
         assertStringValue(
           providedOptionValue,
-          configLocation,
+          relativeConfigLocation,
           providedOptionName,
           result,
         );
@@ -906,7 +910,7 @@ function validateConfigModuleOptionValues(
       case "b": {
         assertBooleanValue(
           providedOptionValue,
-          configLocation,
+          relativeConfigLocation,
           providedOptionName,
           result,
         );
@@ -915,7 +919,7 @@ function validateConfigModuleOptionValues(
       case "e": {
         assertFunctionValue(
           providedOptionValue,
-          configLocation,
+          relativeConfigLocation,
           providedOptionName,
           result,
         );
@@ -924,7 +928,7 @@ function validateConfigModuleOptionValues(
       case "o": {
         assertObjectValue(
           providedOptionValue,
-          configLocation,
+          relativeConfigLocation,
           providedOptionName,
           result,
         );
@@ -933,7 +937,7 @@ function validateConfigModuleOptionValues(
       case "N": {
         assertArrayOfNumbersValue(
           providedOptionValue,
-          configLocation,
+          relativeConfigLocation,
           providedOptionName,
           result,
         );
@@ -942,7 +946,7 @@ function validateConfigModuleOptionValues(
       case "n": {
         assertNumberValue(
           providedOptionValue,
-          configLocation,
+          relativeConfigLocation,
           providedOptionName,
           result,
         );
@@ -951,7 +955,7 @@ function validateConfigModuleOptionValues(
       case "r": {
         assertRegExpValue(
           providedOptionValue,
-          configLocation,
+          relativeConfigLocation,
           providedOptionName,
           result,
         );
