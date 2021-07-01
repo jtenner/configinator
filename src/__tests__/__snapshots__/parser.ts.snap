@@ -16,6 +16,22 @@ exports[`parser F flag default value: files - file 0 1`] = `"a"`;
 
 exports[`parser F flag default value: files - file 1 1`] = `"b"`;
 
+exports[`parser G flag default value: G flag default values 1`] = `
+Object {
+  "diagnostics": Array [],
+}
+`;
+
+exports[`parser G flag default value: config - module 1`] = `
+Object {
+  "options": Object {},
+}
+`;
+
+exports[`parser G flag default value: file - glob 0 1`] = `"a"`;
+
+exports[`parser G flag default value: file - glob 1 1`] = `"b"`;
+
 exports[`parser already provided flags: already provided flag 1`] = `
 Object {
   "diagnostics": Array [
@@ -74,6 +90,16 @@ exports[`parser bad option flag type: bad option flag type 1`] = `
 Object {
   "diagnostics": Array [
     "Invalid configuration option '--bad': Option type 'z' is invalid",
+  ],
+}
+`;
+
+exports[`parser config is not an object: config - module 1`] = `42`;
+
+exports[`parser config is not an object: config is not an object 1`] = `
+Object {
+  "diagnostics": Array [
+    "Invalid Configuration at 'src/__test_files__/config.not_an_object.js': Must be an object",
   ],
 }
 `;
@@ -148,6 +174,20 @@ Object {
   ],
 }
 `;
+
+exports[`parser n flag default value: config - module 1`] = `
+Object {
+  "options": Object {},
+}
+`;
+
+exports[`parser n flag default value: n flag default values 1`] = `
+Object {
+  "diagnostics": Array [],
+}
+`;
+
+exports[`parser n flag default value: num 1`] = `50`;
 
 exports[`parser number type flag: validate number flag 1`] = `
 Object {

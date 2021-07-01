@@ -51,6 +51,7 @@ export function parse(
         configModule,
         configModuleAbsoluteLocation,
         result,
+        env,
       );
       validateConfigModuleOptionValues(
         configModule,
@@ -85,6 +86,7 @@ export function parse(
           configModule,
           extendedConfigFileLocation,
           result,
+          env,
         );
         validateConfigModuleOptionValues(
           configModule,
@@ -811,14 +813,16 @@ function resolveDefaultOptionValue(
 
 function validateConfigModuleShape(
   configModule: any,
-  path: string,
+  absoluteConfigurationPath: string,
   result: util.ConfigurationState,
+  env: UserDefinedEnvironment,
 ) {
+  const relativeConfigurationPath = path.relative(env.cwd, absoluteConfigurationPath)
   if (typeof configModule !== "object") {
     result.diagnostics.push(
       util.diag(
         ConfigurationDiagnosticMessage.ASP_300_Invalid_Configuration_Must_Be_An_Object,
-        [path],
+        [relativeConfigurationPath],
       ),
     );
     return;
@@ -830,7 +834,7 @@ function validateConfigModuleShape(
         util.diag(
           ConfigurationDiagnosticMessage.ASP_301_Invalid_Configuration_Shape_Type_Expected,
           [
-            path,
+            relativeConfigurationPath,
             "extends",
             "String",
             Object.prototype.toString.call(configModule.extends).slice(8, -1),
@@ -846,7 +850,7 @@ function validateConfigModuleShape(
         util.diag(
           ConfigurationDiagnosticMessage.ASP_301_Invalid_Configuration_Shape_Type_Expected,
           [
-            path,
+            relativeConfigurationPath,
             "options",
             "Object",
             Object.prototype.toString.call(configModule.extends).slice(8, -1),

@@ -767,4 +767,53 @@ describe("parser", () => {
     expect(filter(result, ["diagnostics"])).toMatchSnapshot("f flag default values");
     snapshotValues(result);
   });
+
+  test("G flag default value", () => {
+    const config: Configuration = {
+      config: {
+        name: "config",
+        type: "R",
+        defaultValue: "src/__test_files__/default.config.js"
+      },
+      file: {
+        name: "file",
+        type: "G",
+        defaultValue: ["src/__test_files__/a.txt", "src/__test_files__/b.txt"],
+      },
+    };
+    const result = parse([], config, globalEnv);
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot("G flag default values");
+    snapshotValues(result);
+  });
+
+  test("n flag default value", () => {
+    const config: Configuration = {
+      config: {
+        name: "config",
+        type: "R",
+        defaultValue: "src/__test_files__/default.config.js"
+      },
+      num: {
+        name: "num",
+        type: "n",
+        defaultValue: 50,
+      },
+    };
+    const result = parse([], config, globalEnv);
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot("n flag default values");
+    snapshotValues(result);
+  });
+
+  test("config is not an object", () => {
+    const config: Configuration = {
+      config: {
+        name: "config",
+        type: "R",
+        defaultValue: "src/__test_files__/config.not_an_object.js"
+      },
+    };
+    const result = parse([], config, globalEnv);
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot("config is not an object");
+    snapshotValues(result);
+  });
 });
