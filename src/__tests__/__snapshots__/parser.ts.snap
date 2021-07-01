@@ -120,6 +120,22 @@ Object {
 }
 `;
 
+exports[`parser boolean option: config - module 1`] = `
+Object {
+  "options": Object {
+    "test": true,
+  },
+}
+`;
+
+exports[`parser boolean option: test 1`] = `true`;
+
+exports[`parser boolean option: test booleans 1`] = `
+Object {
+  "diagnostics": Array [],
+}
+`;
+
 exports[`parser config is not an object: config - module 1`] = `42`;
 
 exports[`parser config is not an object: config is not an object 1`] = `

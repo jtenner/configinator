@@ -902,4 +902,21 @@ describe("parser", () => {
     expect(filter(result, ["diagnostics"])).toMatchSnapshot("test strings");
     snapshotValues(result);
   });
+
+  test("boolean option", () => {
+    const config: Configuration = {
+      config: {
+        name: "config",
+        type: "R",
+        defaultValue: "src/__test_files__/config.boolean.js"
+      },
+      test: {
+        name: "test",
+        type: "b",
+      }
+    };
+    const result = parse([], config, globalEnv);
+    expect(filter(result, ["diagnostics"])).toMatchSnapshot("test booleans");
+    snapshotValues(result);
+  });
 });
