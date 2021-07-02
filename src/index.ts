@@ -123,11 +123,16 @@ export function parse(
 function ensureRequiredOptions(result: util.ConfigurationState): void {
   for (const optionValue of result.values) {
     const [option, value] = optionValue;
-    if (option.required && value.providedBy === util.ConfigurationOptionProvidedBy.Unprovided) {
-      result.diagnostics.push(util.diag(
-        ConfigurationDiagnosticMessage.CFG_400_Invalid_Provided_Configuration_Option_Is_Required,
-        [option.name],
-      ));
+    if (
+      option.required &&
+      value.providedBy === util.ConfigurationOptionProvidedBy.Unprovided
+    ) {
+      result.diagnostics.push(
+        util.diag(
+          ConfigurationDiagnosticMessage.CFG_400_Invalid_Provided_Configuration_Option_Is_Required,
+          [option.name],
+        ),
+      );
     }
   }
 }

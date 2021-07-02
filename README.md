@@ -249,7 +249,7 @@ const config: Configuration = {
   },
   "single-glob": {
     name: "single-glob",
-    type: "g", // single file
+    type: "g", // single glob
     // defaultValue: "*.txt",
   },
 };
@@ -300,7 +300,7 @@ const config: Configuration = {
   },
   "single-number": {
     name: "single-number",
-    type: "n", // single file
+    type: "n", // single number
     // defaultValue: 5,
   },
 };
@@ -355,4 +355,46 @@ module.exports = {
     object: {},
   },
 };
+```
+
+# "r" flag
+
+Regular Expression objects via cli are passed using the `"r"` option type.
+
+```ts
+module.exports = {
+  regex: {
+    name: "regex",
+    type: "R",
+    // defaultValue: /./,
+  },
+};
+```
+
+When passed via the cli, it generates a regular expression with no option flags.
+
+```sh
+# calls, new RegExp(str)
+node myCli.js --regex .*
+```
+
+When passed via config object, it needs to be an `instanceof RegExp`.
+
+```ts
+module.exports = {
+  regex: /./,
+};
+```
+
+# License
+
+```
+The MIT License (MIT)
+Copyright © 2021 Joshua Tenner <tenner.joshua@gmail.com>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ```
