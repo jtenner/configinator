@@ -1,5 +1,5 @@
 {
-  "name": "configintaor",
+  "name": "configinator",
   "version": "0.0.1",
   "description": "Configuration aware cli argv parser",
   "main": "lib/index.js",
