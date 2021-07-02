@@ -1,10 +1,12 @@
 {
-  "name": "@as-pect/cli-parser",
-  "version": "6.2.4",
-  "description": "Parse CLI arguments and also be configuration file aware",
+  "name": "configintaor",
+  "version": "0.0.1",
+  "description": "Configuration aware cli argv parser",
   "main": "lib/index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "prettier": "prettier --write .",
+    "update-snapshots": "jest -u"
   },
   "keywords": [
     "cli",
