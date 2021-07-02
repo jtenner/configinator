@@ -13,6 +13,9 @@
     "argv",
     "configuration"
   ],
+  "files": [
+    "lib"
+  ],
   "author": "Joshua Tenner <tenner.joshua@gmail.com>",
   "license": "MIT",
   "devDependencies": {
