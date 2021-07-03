@@ -187,3 +187,10 @@ export type ConfigurationRequire = {
   getModule(): any;
   filename: string;
 };
+
+export type HelpConfig = {
+  width?: number;
+  flagIndent?: number;
+  descriptionIndent?: string;
+  newLine?: string;
+};
