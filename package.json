@@ -29,6 +29,7 @@
     "typescript": "^4.3.5"
   },
   "dependencies": {
-    "glob": "^7.1.7"
+    "glob": "^7.1.7",
+    "word-wrap": "^1.2.3"
   }
 }

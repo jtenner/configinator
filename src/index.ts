@@ -13,6 +13,7 @@ export type UserDefinedEnvironment = {
   cwd: string;
   readFileSync(file: string, basename: string): string | null;
 };
+
 export function parse(
   argv: string[],
   config: UserDefinedConfigration,
@@ -1188,4 +1189,53 @@ function resolveUnsetOptionsFromConfigModule(
       }
     }
   }
+}
+
+const OptionTypeDescription: Record<util.ConfigurationOptionType, string> = {
+  F: "File Array",
+  G: "Glob Array",
+  N: "Number Array",
+  R: "Node Require",
+  S: "String Array",
+  b: "Boolean Flag",
+  e: "Executable Function",
+  f: "File Path",
+  g: "Glob Query",
+  n: "Number",
+  o: "Configuration Object",
+  r: "Regular Expression",
+  s: "String",
+};
+
+export function help(
+  config: util.ConfigurationState,
+  helpConfig?: util.HelpConfig,
+): string {
+  const wrap = require("word-wrap");
+  const result = [];
+
+  /* istanbul ignore next */
+  const descriptionIndent = helpConfig?.descriptionIndent ?? "    ";
+  /* istanbul ignore next */
+  const flagIndent = " ".repeat(helpConfig?.flagIndent ?? 2);
+  /* istanbul ignore next */
+  const newLine = helpConfig?.newLine ?? "\n";
+  /* istanbul ignore next */
+  const width = helpConfig?.width ?? 80;
+
+  const wrapOptions = {
+    width,
+    indent: descriptionIndent,
+    newline: newLine,
+    trim: true,
+  };
+
+  for (const namedOption of config.optionsByName) {
+    const [name, option] = namedOption;
+    const flagText = `${flagIndent}--${name}: [${
+      OptionTypeDescription[option.type]
+    }] ${option.description ?? ""}`;
+    result.push(wrap(flagText, wrapOptions));
+  }
+  return result.join(newLine);
 }

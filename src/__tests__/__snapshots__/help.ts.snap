@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`help text: help text 1`] = `
+"      --config: [Node Require] A user passed configuration location
+      --test1: [Boolean Flag] A boolean flag
+      --nodesc: [String]"
+`;
+
+exports[`help text: help text diagnostics 1`] = `Array []`;
