@@ -86,7 +86,7 @@ export function parse(
           result.diagnostics.push(
             util.diag(
               ConfigurationDiagnosticMessage.CFG_305_Invalid_Configuration_At,
-              [relativeConfigLocation, ex.message],
+              [relativeConfigLocation, (ex as Error).message],
             ),
           );
           return result;
